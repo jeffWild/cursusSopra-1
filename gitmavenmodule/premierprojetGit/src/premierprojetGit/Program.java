@@ -7,6 +7,7 @@ public class Program {
 		System.out.println("autre essai 3");
 		System.out.println(faitcalcul(9));
 		System.out.println("autre message");
+		System.out.println("autre message 2");
 	}
 	
 	public static int faitcalcul(int value) {
