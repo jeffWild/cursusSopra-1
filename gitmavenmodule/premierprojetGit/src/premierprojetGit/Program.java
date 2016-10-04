@@ -6,6 +6,7 @@ public class Program {
 		System.out.println("hello world 3");
 		System.out.println("autre essai 3");
 		System.out.println(faitcalcul(9));
+		System.out.println("autre message");
 	}
 	
 	public static int faitcalcul(int value) {
