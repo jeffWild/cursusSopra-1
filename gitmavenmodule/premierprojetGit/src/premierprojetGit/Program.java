@@ -11,7 +11,7 @@ public class Program {
 	}
 	
 	public static int faitcalcul(int value) {
-		return (int)(value / 2.0 + 0.4);
+		return (int)(value / 2.0 + 0.5);
 	}
 
 }
