@@ -3,6 +3,7 @@ package com.courtalon.jpaExercice1Form.graphic;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BoxLayout;
@@ -15,6 +16,8 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -22,7 +25,7 @@ import com.courtalon.jpaExercice1Form.metier.Tache;
 import com.courtalon.jpaExercice1Form.utils.TacheDAO;
 
 public class FenetreTaches extends JFrame 
-						   implements ActionListener, ListSelectionListener
+						   implements ActionListener, ListSelectionListener, DocumentListener
 {
 	public static final String ACTION_LOAD = "load";
 	public static final String ACTION_CLEAR = "clear";
@@ -50,6 +53,9 @@ public class FenetreTaches extends JFrame
 	 */
 	private JCheckBox triPriorite;
 	private JTextField filtreContexte;
+	// la liste des taches récupérées depuis la base
+	private List<Tache> taches;
+	
 	
 	
 	public FenetreTaches(TacheDAO tacheDAO) {
@@ -139,6 +145,18 @@ public class FenetreTaches extends JFrame
 		triPriorite.setActionCommand(ACTION_TRI);
 		triPriorite.addActionListener(this);
 		
+		// liste de taches vide
+		taches = new ArrayList<>();
+		
+		//
+		// pour le JTextField, si on veu etre prevenu d'un changement dans son contenu
+		// il ne faut pas ecouter le JTextField lui même, mais le Document
+		// qu'il utilise pour gérer son contenu
+		// le JtextField ne s'occupe que de la partie "interface"
+		// le Document s'occupe du contenu, y compris les evenements associés
+		//
+		filtreContexte.getDocument().addDocumentListener(this);
+		
 	}
 
 	// selection dans la liste
@@ -167,6 +185,7 @@ public class FenetreTaches extends JFrame
 				break;
 			case ACTION_CLEAR:
 				dataTaches.clear();
+				taches.clear();
 				break;
 			case ACTION_EDIT:
 				fenetreEdit.setTache( listeTaches.getSelectedValue());
@@ -183,17 +202,39 @@ public class FenetreTaches extends JFrame
 				break;
 				
 		}
-		
 	}
 	
 	private void refreshFromBase() {
-		dataTaches.clear();
 		// je récupere la liste des produits depuis la base
-		List<Tache> taches = tacheDAO.findAll(triPriorite.isSelected());
+		taches = tacheDAO.findAll(triPriorite.isSelected());
 		// et je copie tous les produit dans ma JList
+		filtreTache();
+	}
+
+	private void filtreTache() {
+		dataTaches.clear();
+		String filtre = filtreContexte.getText();
 		for (Tache t : taches) {
-			dataTaches.addElement(t);
+			// si rien de saisie dans le filtre, on ne filtre rien
+			if (filtre == null || filtre.isEmpty())
+				dataTaches.addElement(t);
+			// si le filtre est présent dans le contexte, ajouter la tache
+			else if (t.getContexte().indexOf(filtre) != -1)
+				dataTaches.addElement(t);
 		}
 	}
+	
+	/*
+	 * les methodes du documentListener 
+	 * 
+	 * 
+	 */
+
+	@Override
+	public void insertUpdate(DocumentEvent e) { filtreTache(); }
+	@Override
+	public void removeUpdate(DocumentEvent e) { filtreTache(); }
+	@Override
+	public void changedUpdate(DocumentEvent e) { filtreTache(); }
 
 }
