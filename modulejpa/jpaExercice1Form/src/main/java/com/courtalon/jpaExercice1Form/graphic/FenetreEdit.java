@@ -1,4 +1,4 @@
-package com.courtalon.jdbcMetier.graphic;
+package com.courtalon.jpaExercice1Form.graphic;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,42 +10,44 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import com.courtalon.jdbcMetier.metier.Produit;
+import com.courtalon.jpaExercice1Form.metier.Tache;
 
 public class FenetreEdit extends JFrame {
 
-	private Produit produit;
-	public Produit getProduit() {return produit;}
-	public void setProduit(Produit produit) {
-		this.produit = produit;
-		fillFromProduit();
+	private Tache tache;
+	public Tache getTache() {
+		return tache;
 	}
+	public void setTache(Tache tache) {
+		this.tache = tache;
+		fillFromTache();
+	}
+
 	
-	private FenetreProduits parent;
-	private JTextField champNom;
-	private JTextField champPrix;
-	private JTextField champPoids;
+	private FenetreTaches parent;
+	private JTextField champDescription;
+	private JTextField champPriorite;
+	private JTextField champContexte;
 	private JButton boutonSave;
 	
-	// cette fonction rempli les champs du formulaire depuis l'objet produit
-	private void fillFromProduit() {
-		champNom.setText(produit.getNom());
-		champPrix.setText("" + produit.getPrix());
-		champPoids.setText("" + produit.getPoids());
+	private void fillFromTache() {
+		champDescription.setText(tache.getDescription());
+		champPriorite.setText("" + tache.getPriorite());
+		champContexte.setText(tache.getContexte());
 	}
 	
-	// cette fonction rempli l'objet produit a partir des champs du formulaire
+	
 	private void fillFromFields() {
-		produit.setNom(champNom.getText());
-		produit.setPrix(Double.parseDouble(champPrix.getText()));
-		produit.setPoids(Double.parseDouble(champPoids.getText()));
+		tache.setDescription(champDescription.getText());
+		tache.setPriorite(Integer.parseInt(champPriorite.getText()));
+		tache.setContexte(champContexte.getText());
 	}
 	
-	public FenetreEdit(FenetreProduits parent) {
-		super("edition produit");
+	public FenetreEdit(FenetreTaches parent) {
+		super("edition tache");
 		
 		this.parent = parent;
-		setSize(300, 300);
+		setSize(300, 150);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(HIDE_ON_CLOSE);
 		
@@ -59,25 +61,25 @@ public class FenetreEdit extends JFrame {
 		ligne = new JPanel();
 		blLigne = new BoxLayout(ligne, BoxLayout.X_AXIS);
 		ligne.setLayout(blLigne);
-		ligne.add(new JLabel("nom produit"));
-		champNom = new JTextField(30);
-		ligne.add(champNom);
+		ligne.add(new JLabel("description tache"));
+		champDescription = new JTextField(30);
+		ligne.add(champDescription);
 		add(ligne);
 
 		ligne = new JPanel();
 		blLigne = new BoxLayout(ligne, BoxLayout.X_AXIS);
 		ligne.setLayout(blLigne);
-		ligne.add(new JLabel("prix produit"));
-		champPrix = new JTextField(30);
-		ligne.add(champPrix);
+		ligne.add(new JLabel("priorite tache"));
+		champPriorite = new JTextField(30);
+		ligne.add(champPriorite);
 		add(ligne);
 		
 		ligne = new JPanel();
 		blLigne = new BoxLayout(ligne, BoxLayout.X_AXIS);
 		ligne.setLayout(blLigne);
-		ligne.add(new JLabel("poids produit"));
-		champPoids = new JTextField(30);
-		ligne.add(champPoids);
+		ligne.add(new JLabel("contexte tache"));
+		champContexte = new JTextField(30);
+		ligne.add(champContexte);
 		add(ligne);
 		
 		boutonSave = new JButton("sauvegarder");
@@ -87,7 +89,7 @@ public class FenetreEdit extends JFrame {
 		// sous la forme d'un lambda (introduit avec java 8)
 		boutonSave.addActionListener((e) -> {
 			fillFromFields();
-			parent.saveProduit(produit);
+			parent.saveTache(tache);
 			this.setVisible(false);
 		});
 			
