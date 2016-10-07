@@ -23,7 +23,8 @@ public class Produit {
 	
 	// ATTENTION, FetchType.LAZY est une suggestion
 	// hibernate la respecte autant que possible, m'est pas obligé de le faire
-	@ManyToOne(/*fetch=FetchType.LAZY*/ cascade=CascadeType.PERSIST )
+	@ManyToOne(/*fetch=FetchType.LAZY*/ /*cascade=CascadeType.PERSIST*/
+			cascade={CascadeType.MERGE, CascadeType.PERSIST} )
 	public Fabriquant getFabriquant() {return fabriquant;}
 	public void setFabriquant(Fabriquant fabriquant) {this.fabriquant = fabriquant;}
 	

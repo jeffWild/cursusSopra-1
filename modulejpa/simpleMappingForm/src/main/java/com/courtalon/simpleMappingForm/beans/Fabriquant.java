@@ -4,11 +4,13 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.PreRemove;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -20,7 +22,14 @@ public class Fabriquant {
 	private Set<Produit> produits;
 	
 	
-	@OneToMany(mappedBy="fabriquant"/*, fetch=FetchType.EAGER*/)
+	@PreRemove
+	public void nettoyageProduits() {
+		for (Produit p : getProduits()) {
+			p.setFabriquant(null);
+		}
+	}
+	
+	@OneToMany(mappedBy="fabriquant"/*, fetch=FetchType.EAGER*/ /*, cascade=CascadeType.REMOVE*/)
 	public Set<Produit> getProduits() {
 		if (produits == null)
 			produits = new HashSet<>();

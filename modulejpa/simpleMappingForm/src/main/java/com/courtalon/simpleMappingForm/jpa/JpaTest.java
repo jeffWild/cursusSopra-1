@@ -25,7 +25,7 @@ public class JpaTest {
         System.out.println("--------------------------------------");
 		test1(emf);
 
-        input.nextLine();
+  /*      input.nextLine();
 		System.out.println("--------------------------------------");
 		test2(emf);
 
@@ -36,6 +36,10 @@ public class JpaTest {
 		input.nextLine();
 		System.out.println("--------------------------------------");
 		test4(emf);
+*/
+		input.nextLine();
+		System.out.println("--------------------------------------");
+		test5(emf);
 
         input.nextLine();
 		System.out.println("--------------------------------------");		
@@ -155,6 +159,8 @@ public class JpaTest {
 		em.close();
 	}
 
+	public static Produit  prod;
+	public static Fabriquant fab;
 	public static void test3(EntityManagerFactory emf)
 	{
 		// on recupere un entityManager
@@ -167,6 +173,7 @@ public class JpaTest {
 		Produit p = em.find(Produit.class, 1);
 		System.out.println(p);
 		System.out.println(p.getFabriquant());
+		prod = p; // je "sauvegarde l'objet p dans la variable prod
 		
 		System.out.println("----------------------------");
 
@@ -176,6 +183,8 @@ public class JpaTest {
 		for (Produit pr : f.getProduits()) {
 			System.out.println(pr);
 		}
+	
+		fab = em.find(Fabriquant.class, 2);
 		
 		//----------------------------------------------------
 		tx.commit();
@@ -197,14 +206,69 @@ public class JpaTest {
 		//p.setFabriquant(f);
 		f.getProduits().add(p);
 		
-		em.persist(f);
-		em.persist(p);
+		//em.persist(f);
+		//em.persist(p);
 		
+		System.out.println("---------------");
+		// cette action n'a pas d'effet sur la base, car l'objet
+		// dans prod est "detaché", et non suivi par l'entity manager courant
+		prod.setCategorie("autre categorie");
+		
+		fab.setDenomination("p'aleolitique");
+		// on peu avoir besoin de "reatacher/reconcilier un objet détaché ou nouveau
+		// a un entity manager
+		// on utilise alors la fonction merge
+		prod.setFabriquant(f);
+		Produit p2 = em.merge(prod);
+		
+		System.out.println("----------------------------");
+		Fabriquant f3 = em.find(Fabriquant.class, 3);
+		/*for (Produit pr : f3.getProduits()) {
+			pr.setFabriquant(null);
+		}*/
+		em.remove(f3);
+		
+		//----------------------------------------------------
+		tx.commit();
+		em.close();
+	}
+	
+	public static void test5(EntityManagerFactory emf)
+	{
+		// on recupere un entityManager
+		EntityManager em = emf.createEntityManager();
+		// et une transaction
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();
+		//----------------------------------------------------
+		// dans le sens n->1, pas besoin de jointure, on navigue dans l'objet
+		// naturellement
+		Query q1 = em.createQuery(
+				"select p.nom, p.fabriquant.denomination from Produit as p");
+		List<Object[]> result = q1.getResultList();
+		for (Object[] ligne : result) {
+			System.out.println(Arrays.toString(ligne));
+		}
+		System.out.println("-------------------------------");
+		// ATTENTION, il faut faire un jointure si vous voulez acceder
+		// a une collection d'une entité
+		
+/*		Query q2 = em.createQuery(
+				"select f.denomination, AVG(p.prix)  from Fabriquant as f "
+				+ " join f.produits as p group by f.denomination");*/
+		Query q2 = em.createQuery(
+				"select f.denomination, AVG(p.prix)  from Fabriquant as f "
+				+ ", IN(f.produits) as p group by f.denomination");
+		result = q2.getResultList();
+		for (Object[] ligne : result) {
+			System.out.println(Arrays.toString(ligne));
+		}
 		
 		
 		//----------------------------------------------------
 		tx.commit();
 		em.close();
 	}
+	
 
 }
