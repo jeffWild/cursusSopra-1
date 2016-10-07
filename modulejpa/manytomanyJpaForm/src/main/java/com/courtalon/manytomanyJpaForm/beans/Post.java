@@ -3,6 +3,8 @@ package com.courtalon.manytomanyJpaForm.beans;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -16,6 +18,12 @@ public class Post {
 	private int rating;
 	private Set<Tag> tags;
 	
+	private GeoLocalisation coordonnees;
+	
+	@Embedded
+	public GeoLocalisation getCoordonnees() {return coordonnees;}
+	public void setCoordonnees(GeoLocalisation coordonnees) {this.coordonnees = coordonnees;}
+
 	// fonction utilitaire pour ajouter un tag au post
 	public void addTag(Tag t) {
 		// n'ajouter que si on a bien un tag en parametre
@@ -27,7 +35,7 @@ public class Post {
 	}
 	
 	// association N to N vers les Tags
-	@ManyToMany
+	@ManyToMany(/*cascade=CascadeType.REMOVE*/)
 	public Set<Tag> getTags() {
 		if (tags == null)
 			tags = new HashSet<>();

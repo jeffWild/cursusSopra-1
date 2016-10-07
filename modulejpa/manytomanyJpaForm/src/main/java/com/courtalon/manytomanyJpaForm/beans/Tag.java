@@ -7,12 +7,22 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.PreRemove;
 
 @Entity
 public class Tag {
 	private int id;
 	private String libelle;
 	private Set<Post> posts;
+	
+	// detagger les post etiquetés par ce tag si on le supprime
+	// avant la supression du tag proprement dite
+	@PreRemove
+	public void removeFromPosts() {
+		for (Post p : getPosts())
+			p.getTags().remove(this);
+	}
+	
 	
 	// appelle la fonction coté maitre de l'association
 	public void addPost(Post p) {
