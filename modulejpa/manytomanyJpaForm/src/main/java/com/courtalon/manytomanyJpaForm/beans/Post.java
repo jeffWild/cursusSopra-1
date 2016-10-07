@@ -8,6 +8,9 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
 @Entity
@@ -36,6 +39,9 @@ public class Post {
 	
 	// association N to N vers les Tags
 	@ManyToMany(/*cascade=CascadeType.REMOVE*/)
+	@JoinTable(name="etiquetages",		// permet de renommer la table de jointure
+			joinColumns={@JoinColumn(name="CLE_POST")},
+			inverseJoinColumns={@JoinColumn(name="CLE_TAG")}) 
 	public Set<Tag> getTags() {
 		if (tags == null)
 			tags = new HashSet<>();
