@@ -157,8 +157,9 @@ public class JpaTest {
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
 		//----------------------------------------------------
-		
-		em.remove(em.find(Post.class, 1));
+		Post p = em.find(Post.class, 1);
+		System.out.println(p + " - >" + p.getCoordonnees());
+		em.remove(p);
 		//em.remove(em.find(Tag.class, 1));
 		
 		//----------------------------------------------------
