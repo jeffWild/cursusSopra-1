@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+            http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+          http://www.springframework.org/schema/aop 
+            http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+          http://www.springframework.org/schema/util
+            http://www.springframework.org/schema/util/spring-util-4.0.xsd
+            http://www.springframework.org/schema/context
+			http://www.springframework.org/schema/context/spring-context-4.0.xsd
+			http://www.springframework.org/schema/tx
+           http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+           http://www.springframework.org/schema/mvc
+			http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd"
+			default-autowire="byName">
+
+<bean id="quete1" class="com.courtalon.springKamelotForm.beans.QueteBasique">
+	<constructor-arg index="0" value="compter les pierres du chateau" />
+	<constructor-arg index="1" value="0.3" />
+</bean>
+
+<bean id="quete2" class="com.courtalon.springKamelotForm.beans.QueteBasique">
+	<constructor-arg index="0" value="faire un tour de garde" />
+	<constructor-arg index="1" value="0.2" />
+</bean>
+
+<bean id="quete3" class="com.courtalon.springKamelotForm.beans.QueteBasique">
+	<constructor-arg index="0" value="nettoyer les ecuries" />
+	<constructor-arg index="1" value="0.4" />
+</bean>
+
+<bean id="jacquouille" class="com.courtalon.springKamelotForm.beans.ChevalierBasique">
+	<constructor-arg index="0" value="jacquouille"/>
+	<property name="reussite" value="0.6" />
+	<property name="quete" ref="quete2" />
+</bean>
+
+<bean id="pierrot" class="com.courtalon.springKamelotForm.beans.ChevalierBasique">
+	<constructor-arg index="0" value="pierrot"/>
+	<property name="reussite" value="0.5" />
+	<property name="quete" ref="quete1" />
+</bean>
+
+<bean id="merlin" class="com.courtalon.springKamelotForm.beans.Magicien">
+	<property name="sujets">
+		<list>
+			<value>dame du lac</value>
+			<value>graal</value>
+			<value>chevalier noir</value>
+			<value>princesse lambda</value>
+			<value>tresor des druides</value>
+			<value>dragon</value>
+		</list>
+	</property>
+	<property name="actions">
+		<list>
+			<value>sauver</value>
+			<value>trucider</value>
+			<value>rapporter</value>
+			<value>escorter</value>
+			<value>purifier</value>
+		</list>
+	</property>
+</bean>
+
+<bean id="caradoc" class="com.courtalon.springKamelotForm.beans.ChevalierTableRonde">
+	<constructor-arg index="0" value="Caradoc" />
+	<property name="reussite" value="0.5"/>
+	<property name="quete">
+		<bean class="com.courtalon.springKamelotForm.beans.QueteEpique"
+			  factory-bean="merlin"
+			  factory-method="fournirQuete" />
+	</property>
+</bean>
+
+<bean id="perceval" class="com.courtalon.springKamelotForm.beans.ChevalierTableRonde">
+	<constructor-arg index="0" value="Perceval" />
+	<property name="reussite" value="0.6"/>
+	<property name="quete">
+		<bean class="com.courtalon.springKamelotForm.beans.QueteEpique"
+			  factory-bean="merlin"
+			  factory-method="fournirQuete" />
+	</property>
+</bean>
+
+
+
+</beans>
