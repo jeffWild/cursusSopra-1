@@ -36,7 +36,7 @@ public class SpringApp {
       
         IChevalier c3 = ctx.getBean("caradoc", IChevalier.class);
         IChevalier c4 = ctx.getBean("perceval", IChevalier.class);
-        
+        //ChevalierTableRonde c4 = ctx.getBean("perceval", ChevalierTableRonde.class);
         c3.partirEnQuete();
         c4.partirEnQuete();
         

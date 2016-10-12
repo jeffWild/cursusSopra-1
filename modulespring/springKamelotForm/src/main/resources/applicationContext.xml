@@ -69,8 +69,31 @@
 	</property>
 </bean>
 
+<!-- scope prototype indique a spring de fournir une nouvelle
+ instance a chaque injection différente
+ par defaut (si on indique rien), on est en scope singleton -->
+<bean id="cheval1" 
+	  class="com.courtalon.springKamelotForm.beans.Cheval"
+	  scope="prototype"
+	  lazy-init="true">
+	<constructor-arg value="tornado"/>
+</bean>
+
+<!--  init-method permet d'indiquer une méthode a appeler
+après construction et injection des dépendances dans notre objet
+mais AVANT qu'il ne soit injecté ailleur -->
+<bean id="cheval2"
+	  class="com.courtalon.springKamelotForm.beans.Cheval"
+	  scope="prototype"
+	  lazy-init="true"
+	  init-method="preparer">
+	<constructor-arg value="bourriquet"/>
+</bean>
+
+
 <bean id="caradoc" class="com.courtalon.springKamelotForm.beans.ChevalierTableRonde">
 	<constructor-arg index="0" value="Caradoc" />
+	<property name="cheval" ref="cheval2" />
 	<property name="reussite" value="0.5"/>
 	<property name="quete">
 		<bean class="com.courtalon.springKamelotForm.beans.QueteEpique"
@@ -79,8 +102,11 @@
 	</property>
 </bean>
 
-<bean id="perceval" class="com.courtalon.springKamelotForm.beans.ChevalierTableRonde">
+<bean id="perceval"
+	 class="com.courtalon.springKamelotForm.beans.ChevalierTableRonde"
+	 lazy-init="true">
 	<constructor-arg index="0" value="Perceval" />
+	<property name="cheval" ref="cheval2" />
 	<property name="reussite" value="0.6"/>
 	<property name="quete">
 		<bean class="com.courtalon.springKamelotForm.beans.QueteEpique"
@@ -89,6 +115,29 @@
 	</property>
 </bean>
 
+<bean id="assurancetourix" class="com.courtalon.springKamelotForm.beans.Menestrel" />
+<!-- ici, toute notre configuration de l'AOP -->
+<aop:config>
 
+	<aop:aspect ref="assurancetourix">
+<!--
+ execution : (on vise l'execution d'une methode)
+(* : on prend la méthode quelque soit son type de retour
+com.courtalon.springKamelotForm.beans.Chevalier* : je vise toutes les classes qui matche ce nom
+.partir* : je vise les methodes partir*  (partirEnQuete, partirATaverne...)
+(..)) : qui accepte n'importe quel liste de parametre (toutes les methodes)
+and target(bean) : on veut transmettre le bean "intercepté" au conseiller (le menestrel)
+-->
+		<aop:pointcut 
+expression="execution(* com.courtalon.springKamelotForm.beans.Chevalier*.partir*(..)) and target(bean)"
+id="allKnight"/>
+		<aop:pointcut 
+expression="execution(* com.courtalon.springKamelotForm.beans.ChevalierTableRonde.partir*(..)) and target(bean)"
+id="roundTableKnight"/>
+
+	<aop:before method="chanterAvant" pointcut-ref="allKnight" arg-names="bean"/>
+	<aop:after-returning method="chanterApres" pointcut-ref="roundTableKnight" arg-names="bean"/>
+	</aop:aspect>
+</aop:config>
 
 </beans>
