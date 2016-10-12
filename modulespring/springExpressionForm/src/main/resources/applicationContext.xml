@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+            http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+          http://www.springframework.org/schema/aop 
+            http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+          http://www.springframework.org/schema/util
+            http://www.springframework.org/schema/util/spring-util-4.0.xsd
+            http://www.springframework.org/schema/context
+			http://www.springframework.org/schema/context/spring-context-4.0.xsd
+			http://www.springframework.org/schema/tx
+           http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+           http://www.springframework.org/schema/mvc
+			http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd"
+			default-autowire="byName">
+
+<!--  declaration d'une liste directement dans la configuration -->
+<util:list id="nomStars" value-type="java.lang.String">
+	<value>Willis</value>
+	<value>Schwarzenegger</value>
+	<value>Dujardin</value>
+	<value>Cotillard</value>
+</util:list>
+
+<bean id="generator" class="com.courtalon.springExpressionForm.beans.IDGenerator">
+	<constructor-arg value="1"/>
+</bean>
+
+<bean id="c1" class="com.courtalon.springExpressionForm.beans.Client">
+	<property name="id" value="#{generator.getNextID()}"/>
+	<property name="nom" value="#{nomStars[1]}"/>
+	<property name="email" value="#{nomStars[1] + '@california.gov'}"/>
+	<property name="solde" value="#{200.0 * 3}" />
+</bean>
+
+<bean id="c2" class="com.courtalon.springExpressionForm.beans.Client">
+	<property name="id" value="#{generator.getNextID()}"/>
+	<property name="nom" value="#{nomStars[2]}"/>
+	<property name="email"><null /></property>
+	<property name="solde" value="#{200.0 * T(java.lang.Math).PI}" />
+</bean>
+
+<bean id="c3" class="com.courtalon.springExpressionForm.beans.Client">
+	<property name="id" value="#{generator.getNextID()}"/>
+	<property name="nom" value="#{c2.email ?: 'anonyme'}"/> <!-- elvis operator -->
+	<property name="email" value="#{c2.email ?. toUpperCase()}" />
+	<property name="solde" value="${mycustomprops.solde}" />
+</bean>
+
+<context:property-placeholder location="classpath*:application.properties"/>
+
+	  
+</beans>
