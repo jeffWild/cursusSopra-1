@@ -29,11 +29,9 @@ public class SpringApp {
 	public static void main(String[] args) {
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
 		
-		DocumentBuilderFactory dbf = ctx.getBean("dbf", DocumentBuilderFactory.class);
 		
 		try {
-			DocumentBuilder db = dbf.newDocumentBuilder();
-			Document doc = db.parse("repertoire.xml");
+			Document doc = ctx.getBean("doc", Document.class);
 			
 			NodeList list = doc.getElementsByTagName("nom");
 			for (int i = 0; i < list.getLength(); i++)
@@ -45,9 +43,8 @@ public class SpringApp {
 			
 			System.out.println("-----------------------------");
 			
-			XPathFactory xpf = XPathFactory.newInstance();
-			XPath xp = xpf.newXPath();
-			XPathExpression xpe = xp.compile("//adresse[@codePays='2']/rue/text()");
+			
+			XPathExpression xpe = ctx.getBean(XPathExpression.class);
 			
 			// je requette le document
 			list = (NodeList) xpe.evaluate(doc, XPathConstants.NODESET);
@@ -59,15 +56,6 @@ public class SpringApp {
 			
 			
 			
-		} catch (ParserConfigurationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SAXException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (XPathExpressionException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
