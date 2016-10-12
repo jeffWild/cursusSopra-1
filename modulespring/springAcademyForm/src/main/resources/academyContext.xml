@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+            http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+          http://www.springframework.org/schema/aop 
+            http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+          http://www.springframework.org/schema/util
+            http://www.springframework.org/schema/util/spring-util-4.0.xsd
+            http://www.springframework.org/schema/context
+			http://www.springframework.org/schema/context/spring-context-4.0.xsd
+			http://www.springframework.org/schema/tx
+           http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+           http://www.springframework.org/schema/mvc
+			http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd"
+			default-autowire="byName">
+
+<bean id="violonMaker" class="com.courtalon.springAcademyForm.beans.Luthier" >
+	<property name="noms">
+		<list>
+			<value>stradivarius</value>
+			<value>yamaha</value>
+			<value>bomtempi</value>
+			<value>d'ingre</value>
+		</list>
+	</property>
+</bean> 
+
+<bean id="jericho" class="com.courtalon.springAcademyForm.beans.Trompette" />
+<bean id="vuvuzela" class="com.courtalon.springAcademyForm.beans.Trompette" />
+
+<bean id="fender" 
+	  class="com.courtalon.springAcademyForm.beans.Guitare"
+	  init-method="accorder" />
+<bean id="stratocaster" 
+	  class="com.courtalon.springAcademyForm.beans.Guitare" 
+	  scope="prototype"
+	  init-method="accorder"/>
+
+<bean id="v1"
+	  class="com.courtalon.springAcademyForm.beans.Violon"
+	  factory-bean="violonMaker"
+	  factory-method="fabriqueViolon" />
+<bean id="v2"
+	  class="com.courtalon.springAcademyForm.beans.Violon"
+	  factory-bean="violonMaker"
+	  factory-method="fabriqueViolon" />
+
+<bean id="mozart" class="com.courtalon.springAcademyForm.beans.Musicien">
+	<property name="nom" value="Mozart" />
+	<property name="instrument" ref="v1" />
+</bean>
+
+<bean id="andreRieu" class="com.courtalon.springAcademyForm.beans.Musicien">
+	<property name="nom" value="andre rieu" />
+	<property name="instrument" ref="v2" />
+</bean>
+
+<bean id="louisArmstrong" class="com.courtalon.springAcademyForm.beans.Musicien">
+	<property name="nom" value="louis Armstrong" />
+	<property name="instrument" ref="jericho" />
+</bean>
+
+<bean id="hendrix" class="com.courtalon.springAcademyForm.beans.Musicien">
+	<property name="nom" value="jimmy Hendrix" />
+	<property name="instrument" ref="stratocaster"/>
+</bean>
+
+<bean id="remibricka" class="com.courtalon.springAcademyForm.beans.HommeOrchestre">
+	<property name="nom" value="remi bricka" />
+	<property name="instruments">
+		<set>
+			<ref bean="stratocaster"/>
+			<ref bean="vuvuzela" />
+			<bean class="com.courtalon.springAcademyForm.beans.Trompette" id="klaxon" />
+		</set>
+	</property>
+</bean>
+
+<bean id="darkVador" class="com.courtalon.springAcademyForm.beans.Jongleur">
+	<property name="nom"  value="anakin skywalker" />
+	<property name="nbBalles"  value="25" />
+</bean>
+
+<bean id="public" class="com.courtalon.springAcademyForm.beans.Public" />
+
+<aop:config>
+	<aop:aspect ref="public">
+		<aop:pointcut
+ expression="execution(* com.courtalon.springAcademyForm.beans.IArtiste.faire*(..)) and target(bean)"
+ id="pc1"/>
+ 		<aop:before method="applaudirAvant" pointcut-ref="pc1" arg-names="bean"/>
+ 		<aop:after-returning method="applaudirApres" pointcut-ref="pc1" arg-names="bean"/>
+	</aop:aspect>
+
+</aop:config>
+
+</beans>
