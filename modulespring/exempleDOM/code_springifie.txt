@@ -1,0 +1,18 @@
+
+obtenir un code equivalent de la forme:
+
+...
+Document doc = ctx.getBean("doc", Document.class);
+
+NodeList list = doc.getElementsByTagName("nom");
+for (int i = 0; i < list.getLength(); i++)
+{
+...
+
+
+...
+XPathExpression xpe = ctx.getBean("xpe", XPathExpression.class);
+			
+// je requette le document
+list = (NodeList) xpe.evaluate(doc, XPathConstants.NODESET);
+...
