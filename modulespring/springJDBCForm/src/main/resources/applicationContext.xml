@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+            http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+          http://www.springframework.org/schema/aop 
+            http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+          http://www.springframework.org/schema/util
+            http://www.springframework.org/schema/util/spring-util-4.0.xsd
+            http://www.springframework.org/schema/context
+			http://www.springframework.org/schema/context/spring-context-4.0.xsd
+			http://www.springframework.org/schema/tx
+           http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+           http://www.springframework.org/schema/mvc
+			http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd"
+			default-autowire="byName">
+<!--  le autoWire byName injecte automatiquement un bean dans un setter d'un autre
+bean si les noms et types correspondent (pas besoin d'indiquer property dans la
+configuration -->
+
+<context:property-placeholder location="classpath*:database.properties"/>
+
+<!-- ce bean se charge de la connection a la base de donnée -->
+<bean id="dataSource" 
+	  class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+	  <property name="driverClassName" value="${database.driverName}"/>
+	  <property name="url" value="${database.url}"/>
+	  <property name="username" value="${database.username}" />
+	  <property name="password" value="${database.password}" />
+</bean>
+
+<!-- celui-ci se charge d'aider a l'execution des requetes et l'exploitation
+des resultats de celles-ci -->
+<bean id="jdbcTemplate"
+	 class="org.springframework.jdbc.core.JdbcTemplate">
+<!--  <property name="dataSource" ref="dataSource" />  -->	
+</bean>
+
+
+<bean id="produitDAO"
+	  class="com.courtalon.springJDBCForm.beans.ProduitDAO">
+<!--	<property name="jdbcTemplate" ref="jdbcTemplate" />-->	  
+</bean>
+
+
+</beans>
