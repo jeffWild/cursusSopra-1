@@ -51,7 +51,18 @@ public class ProduitServlet extends SpringBaseServlet {
 						   .forward(request, response);
 	}
 	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		// instancions un produit avec les valeurs du formulaire
+		Produit p = new Produit(
+					Integer.parseInt(request.getParameter("produitID")),
+					request.getParameter("produitNom"),
+					Double.parseDouble(request.getParameter("produitPrix")),
+					Double.parseDouble(request.getParameter("produitPoids")));
+		// on le sauvegarde en base
+		produitDAO.save(p);
+		// on revient a la liste des produits
+		response.sendRedirect("Index");
 	}
 
 }

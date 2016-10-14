@@ -38,6 +38,8 @@ public class ProduitDAO {
 			"update produit set nom=?, prix=?, poids=? where id=?";
 	public static final String INSERT_SQL = 
 			"insert into produit (nom, prix, poids) VALUES (?, ?, ?)";
+	public static final String DELETE_SQL = 
+			"delete from produit where id=?";
 	
 	
 	private JdbcTemplate jdbcTemplate;
@@ -63,4 +65,7 @@ public class ProduitDAO {
 					p.getNom(), p.getPrix(), p.getPoids(), p.getId());
 	}
 
+	public int delete(int id) {
+		return jdbcTemplate.update(DELETE_SQL, id);
+	}
 }

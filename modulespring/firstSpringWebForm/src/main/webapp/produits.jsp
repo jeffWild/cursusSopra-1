@@ -21,6 +21,11 @@
 		<input type="hidden" name="produitID" value="${p.id}" />
 		<input type="submit" value="editer" />
 	</form>
+	<form action="Index" method="post" onsubmit="return confirm('etes vous sur?');" >
+		<input type="hidden" name="produitID" value="${p.id}" />
+		<input type="submit" value="supprimer" />
+	</form>
+	
 	</td>
 </tr>
 </c:forEach>

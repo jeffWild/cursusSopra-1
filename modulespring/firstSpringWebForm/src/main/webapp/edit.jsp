@@ -9,7 +9,7 @@
 </head>
 <body>
 <h2>edition de produit</h2>
-<form action="saveProduit" method="post">
+<form action="Produit" method="post">
 	<input type="hidden" name="produitID" value="${requestScope.produit.id}">
 	<label for="produitNom" >nom</label>
 	<input type="text" name="produitNom" value="${requestScope.produit.nom}" /><br />

@@ -31,7 +31,15 @@ public class IndexServlet extends SpringBaseServlet {
 		super.init();
 		this.produitDAO = ctx.getBean("produitDAO", ProduitDAO.class);
 	}
-
+	public void doPost(HttpServletRequest request, HttpServletResponse response) 
+		      throws IOException, ServletException {
+		if (request.getParameter("produitID") != null) {
+			int pid = Integer.parseInt(request.getParameter("produitID"));
+			// appeler le DAO
+			produitDAO.delete(pid);
+		}
+		response.sendRedirect("Index");
+	}
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response) 
       throws IOException, ServletException {
