@@ -9,6 +9,9 @@ import org.apache.logging.log4j.Logger;
 import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
+import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
+import org.springframework.web.context.*;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 
 public class SpringBaseServlet extends HttpServlet {
@@ -19,8 +22,8 @@ public class SpringBaseServlet extends HttpServlet {
 	    super.init();
 	    WebApplicationContext ctx = WebApplicationContextUtils
 	            .getWebApplicationContext(getServletContext());
-	    ctx = context.getAutowireCapableBeanFactory();
-	    ctx.autowireBean(this);
+	    AutowireCapableBeanFactory factory = ctx.getAutowireCapableBeanFactory();
+	    factory.autowireBean(this);
 
 	}
 	
