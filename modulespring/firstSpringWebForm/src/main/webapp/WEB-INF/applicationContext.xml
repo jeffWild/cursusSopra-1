@@ -30,8 +30,12 @@
 	  <property name="password" value="${database.password}" />
 </bean>
 
-<bean id="msg1" class="com.courtalon.firstSpringWebForm.beans.Message">
-	<property name="corps" value="bonjour depuis spring" />
+<bean id="jdbcTemplate"
+	 class="org.springframework.jdbc.core.JdbcTemplate">
+</bean>
+
+<bean id="produitDAO"
+	  class="com.courtalon.firstSpringWebForm.utils.ProduitDAO">
 </bean>
 
 </beans>
