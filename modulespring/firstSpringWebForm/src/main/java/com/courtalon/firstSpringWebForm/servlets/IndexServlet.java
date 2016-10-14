@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Component;
 
 import com.courtalon.firstSpringWebForm.beans.Message;
@@ -16,12 +17,14 @@ import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
+
 public class IndexServlet extends SpringBaseServlet {
 	
 	private static Logger log = LogManager.getLogger(IndexServlet.class); 
 	private static final long serialVersionUID = 1L;
 
 	private ProduitDAO produitDAO;
+
 
 	@Override
 	public void init() throws ServletException {

@@ -18,7 +18,7 @@
 	<td><c:out value="${p.poids}" /></td>
 </tr>
 </c:forEach>
-
 </table>
+
 </body>
 </html>
