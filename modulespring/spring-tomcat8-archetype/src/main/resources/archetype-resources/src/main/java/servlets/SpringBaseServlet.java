@@ -16,11 +16,11 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 
 public class SpringBaseServlet extends HttpServlet {
 	
-	
+	protected WebApplicationContext ctx;
 	@Override
 	public void init() throws ServletException {
 	    super.init();
-	    WebApplicationContext ctx = WebApplicationContextUtils
+	    ctx = WebApplicationContextUtils
 	            .getWebApplicationContext(getServletContext());
 	    AutowireCapableBeanFactory factory = ctx.getAutowireCapableBeanFactory();
 	    factory.autowireBean(this);
