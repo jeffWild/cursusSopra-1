@@ -4,6 +4,7 @@ import java.util.*;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.web.context.WebApplicationContext;
 
 import com.courtalon.springJDBCForm.beans.*;
 import com.courtalon.springJDBCForm.metier.Produit;
@@ -19,8 +20,7 @@ public class SpringApp {
 		
         Scanner input = new Scanner(System.in);
         
-        
-        
+       
 
         input.nextLine();
         System.out.println("--------------------------------------");

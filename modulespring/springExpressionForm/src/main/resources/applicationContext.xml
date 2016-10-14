@@ -20,6 +20,23 @@
 			http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd"
 			default-autowire="byName">
 
+<!-- ce bean permet de déclarer à spring nos propres convertisseur personnalisés
+ on injecte dans 'customEditors' une map dont chaque entrée représente une conversion
+ possible
+ 	cle = classe a convertir
+ 	valeur = convertisseur a utiliser pour cette classe
+ -->
+<bean id="customconfig"
+	  class="org.springframework.beans.factory.config.CustomEditorConfigurer">
+	  <property name="customEditors">
+	  	<map>
+	  		<entry key="com.courtalon.springExpressionForm.beans.Adresse"
+	  			   value="com.courtalon.springExpressionForm.beans.AdresseEditor" />
+	  	</map>
+	  </property>
+</bean>
+
+
 <!--  declaration d'une liste directement dans la configuration -->
 <util:list id="nomStars" value-type="java.lang.String">
 	<value>Willis</value>
@@ -52,6 +69,23 @@
 	<property name="email" value="#{c2.email ?. toUpperCase()}" />
 	<property name="solde" value="${mycustomprops.solde}" />
 </bean>
+
+<bean id="site1" class="com.courtalon.springExpressionForm.beans.Site">
+	<property name="nom" value="feeleurope"/>
+	<property name="adresse">
+		<bean class="com.courtalon.springExpressionForm.beans.Adresse">
+			<property name="rue" value="153 avenue d'italie" />
+			<property name="ville" value="paris" />
+			<property name="codePostal" value="75013" />
+			<property name="pays" value="france" />
+		</bean>
+	</property>
+</bean>
+<bean id="site2" class="com.courtalon.springExpressionForm.beans.Site">
+	<property name="nom" value="Holmme's home"/>
+	<property name="adresse" value="221b baker street;londre;12345;angleterre" />
+</bean>
+
 
 <context:property-placeholder location="classpath*:application.properties"/>
 

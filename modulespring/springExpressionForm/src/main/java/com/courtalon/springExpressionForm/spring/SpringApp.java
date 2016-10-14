@@ -18,7 +18,7 @@ public class SpringApp {
 		
         Scanner input = new Scanner(System.in);
         
-
+        
         
         
 		System.out.println("--------------------------------------");
@@ -29,6 +29,10 @@ public class SpringApp {
 		System.out.println(c2);
 		System.out.println(c3);
 		
+		Site s1 = ctx.getBean("site1", Site.class);
+		System.out.println(s1);
+		Site s2 = ctx.getBean("site2", Site.class);
+		System.out.println(s2);
 		System.out.println("done...");
 	}
 
