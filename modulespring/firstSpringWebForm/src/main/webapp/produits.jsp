@@ -10,15 +10,23 @@
 <body>
 <h2>liste des produits</h2>
 <table border="1">
-<tr><th>nom</th><th>prix</th><th>poids</th></tr>
+<tr><th>nom</th><th>prix</th><th>poids</th><th>actions</th></tr>
 <c:forEach items="${produits}" var="p">
 <tr>
 	<td><c:out value="${p.nom}" /></td>
 	<td><c:out value="${p.prix}" /></td>
 	<td><c:out value="${p.poids}" /></td>
+	<td>
+	<form action="Produit" method="get">
+		<input type="hidden" name="produitID" value="${p.id}" />
+		<input type="submit" value="editer" />
+	</form>
+	</td>
 </tr>
 </c:forEach>
 </table>
-
+<form action="Produit" method="get">
+	<input type="submit" value="creer produit" />
+</form>
 </body>
 </html>

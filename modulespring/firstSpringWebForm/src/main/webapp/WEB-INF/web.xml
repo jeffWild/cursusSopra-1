@@ -12,10 +12,21 @@
       com.courtalon.firstSpringWebForm.servlets.IndexServlet
     </servlet-class>
   </servlet>
+  <servlet>
+  	<description>
+  	</description>
+  	<display-name>ProduitServlet</display-name>
+  	<servlet-name>ProduitServlet</servlet-name>
+  	<servlet-class>com.courtalon.firstSpringWebForm.servlets.ProduitServlet</servlet-class>
+  </servlet>
 
   <servlet-mapping>
   	<servlet-name>indexServlet</servlet-name>
   	 <url-pattern>/Index</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>ProduitServlet</servlet-name>
+  	<url-pattern>/Produit</url-pattern>
   </servlet-mapping>
   
   <welcome-file-list>
