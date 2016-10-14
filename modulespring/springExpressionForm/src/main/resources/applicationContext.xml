@@ -32,6 +32,8 @@
 	  	<map>
 	  		<entry key="com.courtalon.springExpressionForm.beans.Adresse"
 	  			   value="com.courtalon.springExpressionForm.beans.AdresseEditor" />
+	  		<entry key="com.courtalon.springExpressionForm.beans.GeoLocalisation"
+	  			   value="com.courtalon.springExpressionForm.beans.GeoLocalisationEditor" />	  			   
 	  	</map>
 	  </property>
 </bean>
@@ -80,10 +82,12 @@
 			<property name="pays" value="france" />
 		</bean>
 	</property>
+	<property name="localisation" value="48.819626;2.359473" />
 </bean>
 <bean id="site2" class="com.courtalon.springExpressionForm.beans.Site">
 	<property name="nom" value="Holmme's home"/>
 	<property name="adresse" value="221b baker street;londre;12345;angleterre" />
+	<property name="localisation" value="51.523880;-0.158655" />
 </bean>
 
 
