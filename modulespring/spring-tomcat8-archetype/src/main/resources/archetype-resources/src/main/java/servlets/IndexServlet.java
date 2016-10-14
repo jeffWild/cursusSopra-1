@@ -11,7 +11,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 
 
-public class IndexServlet extends HttpServlet {
+public class IndexServlet extends SpringBaseServlet {
 	
 	private static Logger log = LogManager.getLogger(IndexServlet.class); 
 	private static final long serialVersionUID = 1L;
