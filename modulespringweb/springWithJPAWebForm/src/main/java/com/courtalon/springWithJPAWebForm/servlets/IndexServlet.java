@@ -37,7 +37,7 @@ public class IndexServlet extends SpringBaseServlet {
 			// appeler le DAO
 			produitDAO.remove(pid);
 		}
-		response.sendRedirect("/index");
+		response.sendRedirect("Index");
 	}
 	
 
