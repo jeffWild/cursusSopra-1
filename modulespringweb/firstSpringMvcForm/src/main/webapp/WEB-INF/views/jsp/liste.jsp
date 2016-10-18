@@ -9,10 +9,15 @@
 <title>liste des messages</title>
 <s:url value="/resources/css/bootstrap.css" var="bootstrapStyle" />
 <s:url value="/resources/css/message.css" var="coreStyle" />
+<s:url value="/resources/js/jquery-2.1.4.js" var="jqueryjs" />
+<s:url value="/resources/js/bootstrap.js" var="bootstrapjs" />
+
 <s:url value="/message/add" var="addTweet" />
 
 <link href="${bootstrapStyle}" rel="stylesheet" />
 <link href="${coreStyle}" rel="stylesheet" />
+<script type="text/javascript" src="${jqueryjs}"></script>
+<script type="text/javascript" src="${bootstrapjs}"></script>
 </head>
 <body>
 <nav class="navbar navbar-inverse">
@@ -28,6 +33,16 @@
 	</div>
 </nav>
 <div class="container">
+	<c:if test="${not empty msg}">
+		<div class="alert alert-${css} alert-dismissible" role="alert">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			<strong>${msg}</strong>
+		</div>
+	</c:if>
+
+
 	<h1>liste des tweets</h1>
 	<table class="table table-striped">
 		<thead>
