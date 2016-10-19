@@ -2,6 +2,11 @@ package com.courtalon.springMvcExo3Form.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +22,17 @@ import com.courtalon.springMvcExo3Form.repositories.IEmployeDAO;
 @RequestMapping("/employe")
 public class EmployeController {
 	
+	private EmployeValidator employeValidator;
+	@Autowired
+	public EmployeValidator getEmployeValidator() {return employeValidator;}
+	public void setEmployeValidator(EmployeValidator employeValidator) {this.employeValidator = employeValidator;}
+
+	@InitBinder
+	protected void initBinder(WebDataBinder binder) {
+		binder.setValidator(employeValidator);
+	}
+	
+
 	private IEmployeDAO employeDAO;
 	
 	@Autowired
@@ -77,7 +93,9 @@ public class EmployeController {
 	}
 	
 	@RequestMapping(value="/save", method=RequestMethod.POST)
-	public String save(@ModelAttribute("employe") Employe employe,
+	public String save(@ModelAttribute("employe") @Validated Employe employe,
+						BindingResult result,
+						Model model,
 						RedirectAttributes redirectAttributes) {
 		/*System.out.println("employe : " + employe 
 							+ " departementID " + employe.getDepartementID());*/
@@ -85,6 +103,11 @@ public class EmployeController {
 		// pour bien sauvegarder l'employe
 		
 		//employe.setDepartement(departementDAO.findById(employe.getDepartementID()));
+		
+		if (result.hasErrors()) {
+			model.addAttribute("departements", departementDAO.findAll());
+			return "employe/form";
+		}
 		
 		employeDAO.save(employe);
 		
