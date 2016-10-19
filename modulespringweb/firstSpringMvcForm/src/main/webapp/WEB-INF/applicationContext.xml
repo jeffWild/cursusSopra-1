@@ -21,8 +21,8 @@
 			default-autowire="byName">
 
 <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"/>
-
 <context:property-placeholder location="classpath*:database.properties"/>
+
 
 <bean id="dataSource" 
 	  class="org.springframework.jdbc.datasource.DriverManagerDataSource">

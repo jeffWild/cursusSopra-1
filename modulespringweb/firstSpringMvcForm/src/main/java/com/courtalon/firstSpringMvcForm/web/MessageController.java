@@ -1,7 +1,21 @@
 package com.courtalon.firstSpringMvcForm.web;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
+import org.springframework.validation.ValidationUtils;
+import org.springframework.validation.Validator;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,7 +28,22 @@ import com.courtalon.firstSpringMvcForm.repositories.IMessageDAO;
 
 @Controller
 @RequestMapping("/message")
-public class MessageController {
+public class MessageController
+{
+
+	// injection de notre validateur de message
+	// lui-même déclaré dans spring via @Component
+	// on aurait put aussi le déclarer dans le fichier xml
+	@Autowired
+	private MessageValidator messageValidator;
+	public MessageValidator getMessageValidator() {return messageValidator;}
+	public void setMessageValidator(MessageValidator messageValidator) {this.messageValidator = messageValidator;}
+
+	// cette méthode choisi le validateur a utiliser
+	@InitBinder
+	protected void initBinder(WebDataBinder binder) {
+		binder.setValidator(messageValidator);
+	}
 
 	private IMessageDAO messageDAO;
 	@Autowired
@@ -34,7 +63,11 @@ public class MessageController {
 	public ModelAndView add() {
 		ModelAndView model = new ModelAndView();
 		model.setViewName("formMessage");
-		model.addObject("message", new Message(0, "nouveau titre", "nouveau corps"));
+		model.addObject("message", new Message(0,
+												"nouveau titre",
+												"nouveau corps",
+												"pasemail@none.com",
+												new Date()));
 		
 		return model;
 	}
@@ -57,9 +90,18 @@ public class MessageController {
 		return model;
 	}
 	
+	// ajout de l'annotation  @Validated pour activer la validation
+	// sur l'argument message
+	// l'argument BindingResult sera injécté par spring
+	// il contient le résultat de la validation
 	@RequestMapping(value="/save", method=RequestMethod.POST)
-	public String save(@ModelAttribute("message") Message message,
+	public String save(@ModelAttribute("message") @Validated Message message,
+						BindingResult result,
+						Model model,
 						RedirectAttributes redirectAttribute) {
+		if (result.hasErrors()) {
+			return "formMessage";
+		}
 		messageDAO.save(message);
 		redirectAttribute.addFlashAttribute("css", "success");
 		redirectAttribute.addFlashAttribute("msg",
@@ -78,5 +120,6 @@ public class MessageController {
 		
 		return "redirect:/message/liste";
 	}
+	
 	
 }

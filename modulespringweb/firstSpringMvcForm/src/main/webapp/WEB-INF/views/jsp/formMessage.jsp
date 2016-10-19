@@ -48,14 +48,31 @@
 			<label class="col-sm-2 control-label">Titre</label>
 			<div class="col-sm-10">
 				<sf:input path="titre" type="text" class="form-control" id="titre"/>
+				<sf:errors path="titre" class="control-label"/>
 			</div>
 		</div>
 		<div class="form-group">
 			<label class="col-sm-2 control-label">Corps</label>
 			<div class="col-sm-10">
 				<sf:textarea path="corps" class="form-control" id="corps"/>
+				<sf:errors path="corps" class="control-label"/>
 			</div>
 		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">Email</label>
+			<div class="col-sm-10">
+				<sf:input path="email" type="text" class="form-control" id="email"/>
+				<sf:errors path="email" class="control-label"/>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">Date</label>
+			<div class="col-sm-10">
+				<sf:input path="dateMessage" type="text" class="form-control" id="dateMessage"/>
+				<sf:errors path="dateMessage" class="control-label"/>
+			</div>
+		</div>
+		
 		<div class="form-group">
 			<div class="col-sm-offset-2 col-sm-10">
 				<button type="submit" class="btn-lg btn-primary pull-right">Sauver</button>

@@ -50,6 +50,8 @@
 				<th>ID</th>
 				<th>Titre</th>
 				<th>Corps</th>
+				<th>Email</th>
+				<th>Date</th>
 				<th>Actions</th>
 			</tr>
 		</thead>
@@ -58,6 +60,8 @@
 			<td>${m.id}</td>
 			<td>${m.titre}</td>
 			<td>${m.corps}</td>
+			<td>${m.email}</td>
+			<td>${m.dateMessage}</td>
 			<td>
 				<s:url value="/message/details/${m.id}" var="detailsTweet" />
 				<s:url value="/message/edit/${m.id}" var="editTweet" />

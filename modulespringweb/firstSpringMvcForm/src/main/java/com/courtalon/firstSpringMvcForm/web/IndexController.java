@@ -61,7 +61,11 @@ public class IndexController {
 	public ModelAndView afficheForm() {
 		ModelAndView model = new ModelAndView();
 		model.setViewName("saisie");
-		model.addObject("message", new Message(1, "bonjour", "bien belle journee"));
+		model.addObject("message", new Message(1,
+											  "bonjour",
+											  "bien belle journee",
+											  "none@none.com",
+											  new Date()));
 		model.addObject("infos", "rien de saisit");
 		
 		return model;
