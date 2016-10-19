@@ -22,6 +22,7 @@
 
 <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"/>
 <context:property-placeholder location="classpath*:database.properties"/>
+<context:property-placeholder location="classpath*:validation.properties"/>
 
 
 <bean id="dataSource" 

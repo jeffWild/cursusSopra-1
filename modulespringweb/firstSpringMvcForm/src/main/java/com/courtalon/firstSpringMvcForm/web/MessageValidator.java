@@ -77,9 +77,13 @@ public class MessageValidator implements Validator
 						  "format d'email invalide");
 		}
 		
-		Calendar c = new GregorianCalendar();
-		c.setTime(new Date());
-		if (c.before(msg.getDateMessage())) {
+		Calendar now = new GregorianCalendar();
+		now.setTime(new Date());
+		
+		Calendar d = new GregorianCalendar();
+		d.setTime(msg.getDateMessage());
+		
+		if (now.before(d)) {
 			errors.rejectValue("dateMessage",
 							 "messageForm.dateMessage",
 							 "pas de voyageur du futur");

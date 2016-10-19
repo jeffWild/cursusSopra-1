@@ -1,5 +1,6 @@
 package com.courtalon.firstSpringMvcForm.web;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -7,6 +8,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -43,6 +45,14 @@ public class MessageController
 	@InitBinder
 	protected void initBinder(WebDataBinder binder) {
 		binder.setValidator(messageValidator);
+		// pour gérer les dates dans votre formulaire
+		// j'utilise un SimpleDateFormat
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		sdf.setLenient(true);
+		// que j'enregistre auprès du binder comme
+		// convertisseur pour les Dates
+		// le parametre a false détermine si on accepte les dates vides
+		binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, false));
 	}
 
 	private IMessageDAO messageDAO;
