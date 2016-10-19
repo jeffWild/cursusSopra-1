@@ -17,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.courtalon.springMvcExo3Form.metier.Employe;
 import com.courtalon.springMvcExo3Form.repositories.IDepartementDAO;
 import com.courtalon.springMvcExo3Form.repositories.IEmployeDAO;
+import com.courtalon.springMvcExo3Form.repositoriesdata.DepartementRepository;
 
 @Controller
 @RequestMapping("/employe")
@@ -39,14 +40,18 @@ public class EmployeController {
 	public IEmployeDAO getEmployeDAO() {return employeDAO;}
 	public void setEmployeDAO(IEmployeDAO employeDAO) {this.employeDAO = employeDAO;}
 
-	
+	/*
 	private IDepartementDAO departementDAO;
 	
 	@Autowired
 	public IDepartementDAO getDepartementDAO() {return departementDAO;}
 	public void setDepartementDAO(IDepartementDAO departementDAO) {this.departementDAO = departementDAO;}
+	*/
+	private DepartementRepository departementRepository;
+	@Autowired
+	public DepartementRepository getDepartementRepository() {return departementRepository;}
+	public void setDepartementRepository(DepartementRepository departementRepository) {this.departementRepository = departementRepository;}
 	
-
 	@RequestMapping(value="/filter/{did}", method=RequestMethod.GET)
 	public ModelAndView listeByDepartement(@PathVariable("did")int did) {
 		ModelAndView model = new ModelAndView("employe/liste");
@@ -68,7 +73,10 @@ public class EmployeController {
 	public ModelAndView add() {
 		ModelAndView model = new ModelAndView("employe/form");
 		model.addObject("employe", new Employe());
-		model.addObject("departements", departementDAO.findAll());
+		model.addObject("departements", departementRepository.findAll());
+		System.out.println("---------------------------");
+		departementRepository.findByNom("informatique");
+		System.out.println("---------------------------");
 		return model;
 	}
 	@RequestMapping(value="/edit/{id}", method=RequestMethod.GET)
@@ -79,7 +87,7 @@ public class EmployeController {
 		/*	if (e.getDepartement() != null)
 				e.setDepartementID(e.getDepartement().getId());*/
 			model.addObject("employe", e);
-			model.addObject("departements", departementDAO.findAll());
+			model.addObject("departements", departementRepository.findAll());
 			model.setViewName("employe/form");
 			return model;
 		}
@@ -105,7 +113,7 @@ public class EmployeController {
 		//employe.setDepartement(departementDAO.findById(employe.getDepartementID()));
 		
 		if (result.hasErrors()) {
-			model.addAttribute("departements", departementDAO.findAll());
+			model.addAttribute("departements", departementRepository.findAll());
 			return "employe/form";
 		}
 		
