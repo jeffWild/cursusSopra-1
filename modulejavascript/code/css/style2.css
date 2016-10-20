@@ -1,0 +1,11 @@
+div.personne {
+    background-color: lightpink;
+    border: solid 1px black;
+    margin: 10px
+}
+
+div.personne:hover {
+    background-color: lavender;
+    border: dashed 1px red;
+    margin: 10px
+}
