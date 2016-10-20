@@ -11,5 +11,5 @@ public interface DepartementRepository
 	extends PagingAndSortingRepository<Departement, Integer>,
 			DepartementRepositoryCustom
 {
-
+	Iterable<Departement> findByNom(String nom);
 }
