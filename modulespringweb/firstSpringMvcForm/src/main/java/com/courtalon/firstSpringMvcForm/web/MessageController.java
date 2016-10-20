@@ -27,6 +27,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.courtalon.firstSpringMvcForm.metier.Message;
 import com.courtalon.firstSpringMvcForm.repositories.IMessageDAO;
+import com.courtalon.firstSpringMvcForm.repositoriesdata.MessageRepository;
 
 @Controller
 @RequestMapping("/message")
@@ -55,16 +56,23 @@ public class MessageController
 		binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, false));
 	}
 
-	private IMessageDAO messageDAO;
+	/*private IMessageDAO messageDAO;
 	@Autowired
 	public IMessageDAO getMessageDAO() {return messageDAO;}
 	public void setMessageDAO(IMessageDAO messageDAO) {this.messageDAO = messageDAO;}
+	*/
+	
+	private MessageRepository messageRepository;
+	@Autowired
+	public MessageRepository getMessageRepository() {return messageRepository;}
+	public void setMessageRepository(MessageRepository messageRepository) {this.messageRepository = messageRepository;}
+	
 	
 	@RequestMapping(value="/liste", method= RequestMethod.GET)
 	public ModelAndView liste() {
 		ModelAndView model = new ModelAndView();
 		model.setViewName("liste");
-		model.addObject("messages", messageDAO.findAll());
+		model.addObject("messages", messageRepository.findAll());
 		
 		return model;
 	}
@@ -86,7 +94,7 @@ public class MessageController
 	public ModelAndView edit(@PathVariable("mid") int mid,
 							RedirectAttributes redirectAttribute) {
 		ModelAndView model = new ModelAndView();
-		Message message = messageDAO.findByID(mid);
+		Message message = messageRepository.findOne(mid);
 		if (message == null) {
 			redirectAttribute.addFlashAttribute("css", "danger");
 			redirectAttribute.addFlashAttribute("msg", "tweet inconnu");
@@ -112,7 +120,7 @@ public class MessageController
 		if (result.hasErrors()) {
 			return "formMessage";
 		}
-		messageDAO.save(message);
+		messageRepository.save(message);
 		redirectAttribute.addFlashAttribute("css", "success");
 		redirectAttribute.addFlashAttribute("msg",
 											"tweet no " + message.getId() + " edité");
@@ -124,7 +132,7 @@ public class MessageController
 	@RequestMapping(value="/delete/{mid}", method=RequestMethod.GET)
 	public String remove(@PathVariable("mid") int mid,
 						RedirectAttributes redirectAttribute) {
-		messageDAO.remove(mid);
+		messageRepository.delete(mid);
 		redirectAttribute.addFlashAttribute("css", "success");
 		redirectAttribute.addFlashAttribute("msg", "tweet no " + mid + " effacé");
 		
