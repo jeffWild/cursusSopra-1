@@ -1,0 +1,44 @@
+<html>
+    <head>
+        <title>ticketManager</title>
+        <link type="text/css" rel="stylesheet" href="css/style5.css" />
+        <script type="text/javascript" src="js/test5.js"></script>
+    </head>
+    <body onload="initialise()">
+        <h1 class="titre">ticket Manager</h1>
+        <form>
+           type Ticket:
+           <select name="type" id="type">
+               <option value="panne" selected>ticket panne</option>
+               <option value="logiciel">ticket logiciel</option>
+           </select> <br />
+           description: 
+           <input type="text"
+                        name="description"
+                        id="description"><br />
+           urgence: 
+           <input type="number"
+                        name="urgence"
+                        id="urgence"><br />
+           <div id="formPanne">
+           noMateriel: 
+           <input type="text"
+                        name="noMateriel"
+                        id="noMateriel"><br />
+           </div>
+           <div id="formLogiciel">
+           nom logiciel: 
+           <input type="text"
+                        name="nomLogiciel"
+                        id="nomLogiciel"><br />
+           version logiciel: 
+           <input type="text"
+                        name="version"
+                        id="version"><br />
+           </div>
+        </form>
+        <button id="addButton">creer ticket</button><br />
+        <div id="tickets"></div>
+    </body>
+
+</html>

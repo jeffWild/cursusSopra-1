@@ -1,0 +1,31 @@
+div.ticket {
+    border: solid 1px black;
+    margin: 10px
+}
+
+div.ticket:hover {
+    
+    border: dashed 1px red;
+    margin: 10px
+}
+
+div.panne {
+    background-color: lightpink;
+}
+div.logiciel {
+    background-color: lightblue;
+}
+
+div.panne:hover {
+    background-color: palevioletred;
+}
+div.logiciel:hover {
+    background-color: cornflowerblue;
+}
+
+div.formVisible {
+    display: block;
+}
+div.formCache {
+    display: none; 
+}
