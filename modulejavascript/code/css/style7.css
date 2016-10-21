@@ -1,0 +1,11 @@
+li.souligne {
+    color: red;
+    font-weight: bolder;
+    text-decoration: underline;
+}
+
+div#reponse {
+    background-color: lightgray;
+    border: black solid 1px;
+    margin: 5px;
+}
