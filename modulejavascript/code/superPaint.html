@@ -1,0 +1,27 @@
+<html>
+    <head>
+        <title>Super Paint</title>
+        <link type="text/css" rel="stylesheet" href="css/stylecanvas.css" />
+        <script type="text/javascript" src="js/jquery-3.1.1.js"></script>
+        <script type="text/javascript" src="js/paint.js"></script>
+    </head>
+    <body>
+        <h1>Super Paint</h1>
+        <div id="main">
+            <canvas id="dessin" width="600" height="400" />
+        </div>
+        figure: <select name="figure" id="figure" >
+                <option value="1">rectangle plein</option>
+                <option value="2">rectangle vide</option>
+                <option value="3">ligne</option>
+                <option value="4">fleche</option>
+                <option value="5">texte</option>
+        </select><br />
+        couleur: <input type="color" name="couleur" id="couleur" /><br />
+        texte: <input type="text" name="texte" id="texte" /><br />
+        <button id="saveButton">sauver</button>
+        <button id="loadButton">charger</button>
+        <br />
+    </body>
+
+</html>
