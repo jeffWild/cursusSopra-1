@@ -1,0 +1,14 @@
+div#reponse {
+    border: black solid 1px;
+    width: 80%;
+    background-color: lightgrey;
+}
+
+div.produit {
+    border: black solid 2px;
+    background-color: lightsteelblue;
+    border-radius: 10px;
+    box-shadow: 10px 10px 5px darkgray;
+    margin: 20px;
+    padding: 10px;
+}
