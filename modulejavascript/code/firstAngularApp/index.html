@@ -27,13 +27,45 @@
 <div class="container" ng-controller="appCtrl" >
 	<h1>liste produits</h1>
     <!-- exemple de binding unidirectionnel , du scope vers la vue -->
+    <!-- ngshow conditionne la visibilité d'une balise a une variable -->
     <h2 ng-show="drapeau">{{message}}</h2>
+    <!-- ngif lui ne fait le rendu de la balise dans le html que si
+     la condition est remplie-->
+    <h2 ng-if="drapeau">{{message}}</h2>
+
     <h3 ng-bind="nom"></h3>
     <!-- exemple de binding bidirectionnel, entre input et scope -->
     <input type="text" ng-model="nom" />
     <input type="checkbox" ng-model="drapeau" />
     <!-- exemple de binding One Time -->
     <h3>{{::nom}}</h3>
+    <hr />
+    <select ng-model="typeCompte">
+        <option value="standard">standard</option>
+        <option value="gold">compte gold</option>
+        <option value="platinum">compte platinum</option>
+    </select>
+    <br />
+    <div ng-switch="typeCompte">
+        <div ng-switch-when="standard">salut client</div>
+        <div ng-switch-when="gold">bien le bonjour, client</div>
+        <div ng-switch-when="platinum">bienvenue, client sama</div>
+        <div ng-switch-default>ouste du balai!</div>
+    </div>
+    standard:  <input type="checkbox" ng-model="standardSelected" /><br />
+    gold:  <input type="checkbox" ng-model="goldSelected" /><br />
+    platinum:  <input type="checkbox" ng-model="platinumSelected" /><br />
+    <div class="presentation" 
+        ng-class="{preStandard: standardSelected,
+                   preGold: goldSelected,
+                   prePlatinum: platinumSelected}">
+        <p>ici, a boutique biobio, nous prenons soin blah blah...</p>
+    </div>
+    <input type="color" ng-model="selectedColor" />
+    <div class="autremessage" ng-style="{'color': selectedColor}">
+        <p>HOHOHOHOHO</p>
+    </div>
+    <button ng-click="changeMessage()">change the message</button>
 	<table class="table table-striped">
 		<thead>
 			<tr>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html ng-app="myApp" >
+    <!-- ng-app indique le module gérant cette partie de la page-->
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>application angularjs</title>
+    <link href="css/bootstrap.css" rel="stylesheet" />
+    <link href="css/style.css" rel="stylesheet" />
+    <script type="text/javascript" src="js/jquery-3.1.1.js"></script>
+    <script type="text/javascript" src="js/bootstrap.js"></script>
+    <script type="text/javascript" src="js/angular.js"></script>
+    <script type="text/javascript" src="js/myApp2.js"></script>
+</head>
+<body>
+    <nav class="navbar navbar-inverse">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">angular APP</a>
+            </div>
+            <div id="navbar">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="active"><a href="#">ajouter</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+<div class="container" ng-controller="appCtrl" >
+	<h1>liste produits</h1>
+ 	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Nom</th>
+				<th>prix</th>
+				<th>Poids</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+	</table>
+</div>
+
+</body>
+</html>
