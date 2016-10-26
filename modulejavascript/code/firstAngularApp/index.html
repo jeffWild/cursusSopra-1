@@ -1,14 +1,16 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="myApp" >
+    <!-- ng-app indique le module gérant cette partie de la page-->
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>application angularjs</title>
     <link href="css/bootstrap.css" rel="stylesheet" />
     <link href="css/style.css" rel="stylesheet" />
-    <script type="text/javascript" src="jquery-3.1.1.js"></script>
-    <script type="text/javascript" src="bootstrap.js"></script>
-    <script type="text/javascript" src="angular.js"></script>
-    <script type="text/javascript" src="myApp.js"></script>
+    <script type="text/javascript" src="js/jquery-3.1.1.js"></script>
+    <script type="text/javascript" src="js/bootstrap.js"></script>
+    <script type="text/javascript" src="js/angular.js"></script>
+    <script type="text/javascript" src="js/myApp.js"></script>
+</head>
 <body>
     <nav class="navbar navbar-inverse">
         <div class="container">
@@ -22,8 +24,16 @@
             </div>
         </div>
     </nav>
-<div class="container">
+<div class="container" ng-controller="appCtrl" >
 	<h1>liste produits</h1>
+    <!-- exemple de binding unidirectionnel , du scope vers la vue -->
+    <h2 ng-show="drapeau">{{message}}</h2>
+    <h3 ng-bind="nom"></h3>
+    <!-- exemple de binding bidirectionnel, entre input et scope -->
+    <input type="text" ng-model="nom" />
+    <input type="checkbox" ng-model="drapeau" />
+    <!-- exemple de binding One Time -->
+    <h3>{{::nom}}</h3>
 	<table class="table table-striped">
 		<thead>
 			<tr>
