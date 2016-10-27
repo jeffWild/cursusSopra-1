@@ -1,4 +1,6 @@
 angular.module("produitApp", ["ngRoute"])
+       .constant("serverUrl",
+                 'http://localhost:8080/springMVCProduitForm/')
        .config(function($routeProvider) {
            // le service que l'on configure est "route"
            // donc on inject "routeProvider" dans la fonction

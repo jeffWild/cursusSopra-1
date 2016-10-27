@@ -1,5 +1,11 @@
 <div class="container" ng-controller="produitListCtrl" >
 	<h1>liste produits</h1>
+    <div>
+        <span ng-repeat="page in pages">
+            <a href="#" ng-click="setCurrentPage(page)">{{page}}</a>
+            <span ng-hide="$last">,</span>
+        </span>
+    </div>
  	<table class="table table-striped">
 		<thead>
 			<tr>

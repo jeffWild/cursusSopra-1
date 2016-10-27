@@ -1,7 +1,7 @@
-<div class="container" ng-controller="produitListCtrl" >
+<div class="container" ng-controller="produitEditCtrl" >
 	<h1>liste produits</h1>
     <form name="produitForm"
-          ng-submit="addProduit(newProduit)"
+          ng-submit="saveProduit(newProduit)"
           novalidate>
         <input type="hidden"
                name="produitID"

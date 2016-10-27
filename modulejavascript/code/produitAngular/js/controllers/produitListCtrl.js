@@ -1,6 +1,13 @@
 angular.module("produitApp")
-       .controller("produitListCtrl", function($scope, $http) {
-           
+       .controller("produitListCtrl", function($scope, $http, serverUrl) {
+           $scope.pages = [];
+           $scope.currentPage = 0;
+           $scope.setCurrentPage= function(noPage){
+               $scope.currentPage = noPage;
+               console.log("new page =" + noPage); 
+               $scope.refresh();
+           };
+
            $scope.champTri = 'prix';
            $scope.setChampTri = function(nomChamp) {
                $scope.champTri = nomChamp;
@@ -8,36 +15,24 @@ angular.module("produitApp")
 
            $scope.produits = [];
 
-
-           $http.get("http://localhost:8080/springMVCProduitForm/produit")
-                .then(function(reponse) {
-                    // en cas de success
-                    console.log("success!");
-                    //console.log(reponse);
-                    $scope.produits = reponse.data.content;
-                }, function (reponse) {
-                    // en cas d'erreur
-                    console.log("erreur!");
-                    console.log(reponse);
-                });
-                
-
-
-           $scope.addProduit = function(newProduit) {
-               $scope.produits.push(newProduit);
-               $scope.newProduit = {};
+           $scope.refresh = function() {
+            $http.get(serverUrl + "produit?noPage="
+                        + $scope.currentPage + "&taillePage=5")
+                    .then(function(reponse) {
+                        // en cas de success
+                        console.log("success!");
+                        //console.log(reponse);
+                        $scope.produits = reponse.data.content;
+                        $scope.pages = [];
+                        for (var idx = 0; idx < reponse.data.totalPages; idx++) {
+                            $scope.pages.push(idx);
+                        }
+                    }, function (reponse) {
+                        // en cas d'erreur
+                        console.log("erreur!");
+                        console.log(reponse);
+                    });
            };
 
-            $scope.supprimerProduit = function(pid) {
-                var index = -1;
-                for (var i =0; i < $scope.produits.length; i++) {
-                    if ($scope.produits[i].id == pid) {
-                        index = i;
-                        break;
-                    }
-                }
-                if (index != -1) {
-                    $scope.produits.splice(index, 1);
-                }
-            };
+           $scope.refresh();
        });
