@@ -9,6 +9,7 @@
     <script type="text/javascript" src="js/jquery-3.1.1.js"></script>
     <script type="text/javascript" src="js/bootstrap.js"></script>
     <script type="text/javascript" src="js/angular.js"></script>
+    <script type="text/javascript" src="js/filters/customFilters.js"></script>
     <script type="text/javascript" src="js/todoApp.js"></script>
 </head>
 <body>
@@ -26,9 +27,18 @@
     </nav>
 <div class="container" ng-controller="todoCtrl" >
     <div class="col-md-2">
-        <h4>choix des contextes</h4>
+        <h4>contextes</h4>
         <div class="well">
             <p>liste des contextes</p>
+            <button class="btn btn-block btn-primary" ng-class="{'btn-success': isContextSelected('tous')}"
+                    ng-click="chooseContext('tous')" >
+                    tous
+            </button>
+            <button class="btn btn-block btn-primary" ng-class="{'btn-success': isContextSelected(ctx)}"
+                    ng-repeat="ctx in taches | unique : 'contexte'"
+                    ng-click="chooseContext(ctx)">
+                    {{ctx}}
+            </button>
         </div>
     </div>
     <div class="col-md-10">
@@ -107,7 +117,7 @@
                     <th>Actions</th>
                 </tr>
             </thead>
-            <tr ng-repeat="tache in taches | checkedTache : filtrageTermine | orderBy: champTri track by $index" >
+            <tr ng-repeat="tache in taches | checkedTache : filtrageTermine | whereContext: ctx | orderBy: champTri track by $index" >
                 <td>{{tache.id}}</td>
                 <td>
                     {{tache.titre}}

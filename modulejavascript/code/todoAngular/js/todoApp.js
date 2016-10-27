@@ -1,34 +1,5 @@
-angular.module("todoApp", [])
-       .filter("checkedTache", function() {
-           // fabrique de filtre nommé checkedTache
-           // chaque fois qu'angular a besoin de ce filtre
-           // il appellera cette fonction pour recuperer
-           // le filtre
-           return function(items, showTerminated) {
-              if (angular.isArray(items)) {
-                // filteredItems est le tableau que je retournerais
-                // tache in taches | checkedTache | orderBy
-                // ng-repeat:       [toutes les taches] -> items
-                // checkedTache:    [items] -> filtrage -> [filteredItems]
-                // orderBy:         [filteredItems] -> trier -> [itemsTrie]
-
-                var filteredItems = [];
-                angular.forEach(items, function(item) {
-                    // ne garder la tache que si elle n'est pas terminée
-                    // ou si on a parametrer le filtre en lui
-                    // disant de garder aussi les taches terminee (showTerminated)
-                    if (item.termine == false || showTerminated == true) {
-                        filteredItems.push(item);
-                    }
-                });
-                return filteredItems;
-              }
-              else {
-                 // si ce n'est pas un tableau, retourner tel quel
-                 return items;
-              }
-           };
-       })
+// le module todoApp dépend du module customFilters
+angular.module("todoApp", ["customFilters"])
        .controller("todoCtrl", function($scope) {
 
         // controle la visibilite du formulaire   
@@ -42,7 +13,17 @@ angular.module("todoApp", [])
         $scope.setChampTri = function(nomChamp) {
             $scope.champTri = nomChamp;
         };
-        
+
+        $scope.ctx = 'tous';
+        $scope.chooseContext = function(ctx) {
+            $scope.ctx = ctx;
+            console.log("new contexte: " + ctx);
+        };
+
+        $scope.isContextSelected = function(ctx) {
+            return ctx == $scope.ctx;
+        };;
+
         $scope.taches = [
             {"id": 1,
                 "titre": "faire menage",
