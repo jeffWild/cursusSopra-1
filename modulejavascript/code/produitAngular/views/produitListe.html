@@ -1,0 +1,29 @@
+<div class="container" ng-controller="produitListCtrl" >
+	<h1>liste produits</h1>
+ 	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th ng-click="setChampTri('id')">ID</th>
+				<th ng-click="setChampTri('nom')">Nom</th>
+				<th ng-click="setChampTri('prix')">prix</th>
+				<th ng-click="setChampTri('poids')">Poids</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+        <tr ng-repeat="produit in produits | orderBy: champTri track by $index" >
+            <td>{{produit.id}}</td>
+            <td>{{produit.nom}}</td>
+            <td>{{produit.prix | currency : '€'}}</td>
+            <td>{{produit.poids}}</td>
+            <td>
+                <button class="btn btn-danger btn-block"
+                        ng-click="supprimerProduit(produit.id)" >
+                    supprimer
+                </button>
+                <button class="btn btn-success btn-block">
+                    acheter
+                </button>
+            </td>
+        </tr>
+	</table>
+</div>

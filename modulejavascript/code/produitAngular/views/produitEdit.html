@@ -1,0 +1,34 @@
+<div class="container" ng-controller="produitListCtrl" >
+	<h1>liste produits</h1>
+    <form name="produitForm"
+          ng-submit="addProduit(newProduit)"
+          novalidate>
+        <input type="hidden"
+               name="produitID"
+               ng-model="newProduit.id" />
+        <div class="form-group">
+            <label for="produitNom">nom</label>
+            <input type="text"
+                   name="produitNom"
+                   class="form-control"
+                   ng-model="newProduit.nom" />
+        </div>
+        <div class="form-group">
+            <label for="produitPrix">prix</label>
+            <input type="number"
+                   name="produitPrix"
+                   class="form-control"
+                   ng-model="newProduit.prix" />
+        </div>
+        <div class="form-group">
+            <label for="produitPoids">poids</label>
+            <input type="number"
+                   name="produitPoids"
+                   class="form-control"
+                   ng-model="newProduit.poids" />
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">
+            Add
+        </button>
+    </form>
+</div>
