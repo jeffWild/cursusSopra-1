@@ -30,11 +30,19 @@ angular.module("todoApp", [])
            };
        })
        .controller("todoCtrl", function($scope) {
-           
+
+        // controle la visibilite du formulaire   
+        $scope.formVisible = false;
+        $scope.showForm = function() {
+            $scope.formVisible = !($scope.formVisible);
+        };
+
+        // controle le tri de la table
         $scope.champTri = 'titre';
         $scope.setChampTri = function(nomChamp) {
             $scope.champTri = nomChamp;
         };
+        
         $scope.taches = [
             {"id": 1,
                 "titre": "faire menage",

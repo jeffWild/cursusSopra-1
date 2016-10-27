@@ -25,100 +25,112 @@
         </div>
     </nav>
 <div class="container" ng-controller="todoCtrl" >
-	<h1>liste des taches</h1>
-    <div class="well">
-        <form name="tacheForm"
-            ng-submit="addTache(newTache)"
-            novalidate>
-            <div class="form-group">
-                <label for="tacheID">identifiant</label>
-                <input type="number"
-                    name="tacheID"
-                    class="form-control"
-                    ng-model="newTache.id" />
-            </div>
-            <div class="form-group">
-                <label for="tacheTitre">titre</label>
-                <input type="text"
-                    name="tacheTitre"
-                    class="form-control"
-                    ng-model="newTache.titre" />
-            </div>
-            <div class="form-group">
-                <label for="tachePriorite">priorite</label>
-                <input type="number"
-                    name="tachePriorite"
-                    class="form-control"
-                    ng-model="newTache.priorite" />
-            </div>
-            <div class="form-group">
-                <label for="tacheContexte">contexte</label>
-                <input type="text"
-                    name="tacheContexte"
-                    class="form-control"
-                    ng-model="newTache.contexte" />
-            </div>
-            <div class="form-group">
-                <label for="tacheDateLimite">dateLimite</label>
-                <input type="date"
-                    name="tacheDateLimite"
-                    class="form-control"
-                    ng-model="newTache.dateLimite" />
-            </div>
-            <div class="form-group">
-                <label for="tacheTermine">termine</label>
-                <input type="checkbox"
-                    name="tacheTermine"
-                    class="form-control"
-                    ng-model="newTache.termine" />
-            </div>
-            <button type="submit" class="btn btn-primary btn-block">
-                Add
-            </button>
-        </form>
+    <div class="col-md-2">
+        <h4>choix des contextes</h4>
+        <div class="well">
+            <p>liste des contextes</p>
+        </div>
     </div>
- 	<table class="table table-striped">
-		<thead>
-			<tr>
-				<th ng-click="setChampTri('id')">ID</th>
-				<th ng-click="setChampTri('titre')">Titre</th>
-				<th ng-click="setChampTri('priorite')">Priorite</th>
-				<th ng-click="setChampTri('contexte')">Contexte</th>
-                <th ng-click="setChampTri('dateLimite')">DateLimite</th>
-                <th>
-                    <label>
-                        <input type="checkbox"
-                               class="checkbox"
-                               ng-model="filtrageTermine"/>
-                        Termine
-                    </label>
-                </th>
-				<th>Actions</th>
-			</tr>
-		</thead>
-        <tr ng-repeat="tache in taches | checkedTache : filtrageTermine | orderBy: champTri track by $index" >
-            <td>{{tache.id}}</td>
-            <td>
-                {{tache.titre}}
-            </td>
-            <td>
-                <span class="label"
-                      ng-class="{'label-danger' : tache.priorite <= 1, 'label-warning': tache.priorite == 2, 'label-info' : tache.priorite == 3, 'label-success' : tache.priorite >= 4 }">
-                    {{tache.priorite}}
-                </span>
-            </td>
-            <td>{{tache.contexte}}</td>
-            <td>{{tache.dateLimite | date : 'dd-MM-yyyy'}}</td>
-            <td>{{tache.termine}}</td>
-            <td>
-                <button class="btn btn-warning btn-block"
-                        ng-click="terminerTache(tache.id)"
-                        ng-disabled="tache.termine" >
-                    terminer
+    <div class="col-md-10">
+        <h1>liste des taches</h1>
+        <div class="well">
+            <h2><span class="label label-info" ng-click="showForm()">
+                formulaire de saisie tache
+            </span></h2>
+            <form ng-show="formVisible"
+                name="tacheForm"
+                ng-submit="addTache(newTache)"
+                novalidate>
+                <div class="form-group">
+                    <label for="tacheID">identifiant</label>
+                    <input type="number"
+                        name="tacheID"
+                        class="form-control"
+                        ng-model="newTache.id" />
+                </div>
+                <div class="form-group">
+                    <label for="tacheTitre">titre</label>
+                    <input type="text"
+                        name="tacheTitre"
+                        class="form-control"
+                        ng-model="newTache.titre" />
+                </div>
+                <div class="form-group">
+                    <label for="tachePriorite">priorite</label>
+                    <input type="number"
+                        name="tachePriorite"
+                        class="form-control"
+                        ng-model="newTache.priorite" />
+                </div>
+                <div class="form-group">
+                    <label for="tacheContexte">contexte</label>
+                    <input type="text"
+                        name="tacheContexte"
+                        class="form-control"
+                        ng-model="newTache.contexte" />
+                </div>
+                <div class="form-group">
+                    <label for="tacheDateLimite">dateLimite</label>
+                    <input type="date"
+                        name="tacheDateLimite"
+                        class="form-control"
+                        ng-model="newTache.dateLimite" />
+                </div>
+                <div class="form-group">
+                    <label for="tacheTermine">termine</label>
+                    <input type="checkbox"
+                        name="tacheTermine"
+                        class="form-control"
+                        ng-model="newTache.termine" />
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">
+                    Add
                 </button>
-            </td>
-        </tr>
+            </form>
+        </div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th ng-click="setChampTri('id')">ID</th>
+                    <th ng-click="setChampTri('titre')">Titre</th>
+                    <th ng-click="setChampTri('priorite')">Priorite</th>
+                    <th ng-click="setChampTri('contexte')">Contexte</th>
+                    <th ng-click="setChampTri('dateLimite')">DateLimite</th>
+                    <th>
+                        <label>
+                            <input type="checkbox"
+                                class="checkbox"
+                                ng-model="filtrageTermine"/>
+                            Termine
+                        </label>
+                    </th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tr ng-repeat="tache in taches | checkedTache : filtrageTermine | orderBy: champTri track by $index" >
+                <td>{{tache.id}}</td>
+                <td>
+                    {{tache.titre}}
+                </td>
+                <td>
+                    <span class="label"
+                        ng-class="{'label-danger' : tache.priorite <= 1, 'label-warning': tache.priorite == 2, 'label-info' : tache.priorite == 3, 'label-success' : tache.priorite >= 4 }">
+                        {{tache.priorite}}
+                    </span>
+                </td>
+                <td>{{tache.contexte}}</td>
+                <td>{{tache.dateLimite | date : 'dd-MM-yyyy'}}</td>
+                <td>{{tache.termine}}</td>
+                <td>
+                    <button class="btn btn-warning btn-block"
+                            ng-click="terminerTache(tache.id)"
+                            ng-disabled="tache.termine" >
+                        terminer
+                    </button>
+                </td>
+            </tr>
 	</table>
+    </div>
 </div>
 
 </body>
