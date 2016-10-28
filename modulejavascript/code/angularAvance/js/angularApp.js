@@ -1,5 +1,12 @@
-angular.module("angularApp", ["ngRoute"])
-        .controller("rootController", function($scope) {
+angular.module("angularApp", ["ngRoute", "mesServices"])
+        .config(function(thirdServiceProvider){
+            // je configure le provide de service "thirdService"
+            thirdServiceProvider.setInitialCompteur(42);
+        })
+        .controller("rootController", function($scope,
+                                               firstService,
+                                               secondService,
+                                               thirdService) {
             $scope.message = "hello from root";
             $scope.compteur = 1;
             $scope.data = {
@@ -10,8 +17,24 @@ angular.module("angularApp", ["ngRoute"])
                 console.log(obj);
             });
 
+            $scope.messageService = "none";
+            $scope.appelServiceFirst = function() {
+                 $scope.messageService= 
+                    "valeur: " + firstService.incrementAndGet();
+            };
+            $scope.messageService2 = "none";
+            $scope.appelServiceSecond = function() {
+                 $scope.messageService2= 
+                    "valeur: " + secondService.incrementAndGet();
+            };
+            $scope.messageService3 = "none";
+            $scope.appelServiceThird = function() {
+                 $scope.messageService3= 
+                    "valeur: " + thirdService.incrementAndGet();
+            };
+
         })
-        .controller("childController", function($scope) {
+        .controller("childController", function($scope, firstService) {
             $scope.salutation = "hello from child";
             //$scope.compteur = 2;
             $scope.incremente = function() {
@@ -27,7 +50,11 @@ angular.module("angularApp", ["ngRoute"])
                 $scope.$broadcast("monEvent",
                  { msg: "hello broadcast from child"});
             };
-
+            $scope.messageService = "none";
+            $scope.appelServiceFirst = function() {
+                 $scope.messageService= 
+                    "valeur: " + firstService.incrementAndGet();
+            };
         })
         .controller("grandChildController", function($scope, $rootScope) {
             $scope.compteur = 5;

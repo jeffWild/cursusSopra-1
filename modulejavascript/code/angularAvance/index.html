@@ -9,6 +9,7 @@
     <script type="text/javascript" src="js/vendor/bootstrap.js"></script>
     <script type="text/javascript" src="js/vendor/angular.js"></script>
     <script type="text/javascript" src="js/vendor/angular-route.js"></script>
+    <script type="text/javascript" src="js/mesServices.js"></script>
     <script type="text/javascript" src="js/angularApp.js"></script>
 </head>
 <body>
@@ -27,6 +28,22 @@
     </nav>
 <div class="container" ng-controller="rootController">
     <h2>controller racine</h2>
+    <p>
+        <button class="btn btn-primary"
+                ng-click="appelServiceFirst()">appel first</button>
+        <h4>{{messageService}}</h4>
+    </p>
+    <p>
+    <button class="btn btn-primary"
+            ng-click="appelServiceSecond()">appel second</button>
+    <h4>{{messageService2}}</h4>
+    </p>
+     <p>
+    <button class="btn btn-primary"
+            ng-click="appelServiceThird()">appel third</button>
+    <h4>{{messageService3}}</h4>
+    </p>
+    <hr />
     <h3>{{message}}</h3>
     <h3>{{compteur}}</h3>
     <h3>{{data.compteur}}</h3>
@@ -34,6 +51,13 @@
     <hr />
     <div class="well" ng-controller="childController">
         <h2>controller enfant</h2>
+         <p>
+        <button class="btn btn-primary"
+                ng-click="appelServiceFirst()">appel first</button>
+        <h4>{{messageService}}</h4>
+        </p>
+       
+        <hr />
         <h3>{{salutation}}</h3>
         <h3>{{message}}</h3>
         <button class="btn btn-block btn-primary"
