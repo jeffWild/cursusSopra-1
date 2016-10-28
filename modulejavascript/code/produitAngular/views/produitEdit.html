@@ -10,14 +10,30 @@
         <input type="text"
                 name="produitNom"
                 class="form-control"
-                ng-model="newProduit.nom" />
+                ng-model="newProduit.nom"
+                ng-required="true"
+                ng-minlength="3"
+                ng-maxlength="50" />
+        <span ng-show="produitForm.produitNom.$dirty">
+        <span class="error-label" ng-show="produitForm.produitNom.$error.minlength">le champ est trop court</span>
+        <span class="error-label" ng-show="produitForm.produitNom.$error.maxlength">le champ est trop long</span>
+        </span>
     </div>
     <div class="form-group">
         <label for="produitPrix">prix</label>
         <input type="number"
                 name="produitPrix"
                 class="form-control"
-                ng-model="newProduit.prix" />
+                ng-model="newProduit.prix"
+                ng-required="true"
+                ng-min="0"
+                ng-max="10000" />
+        <span ng-show="produitForm.produitPrix.$dirty">
+        <span class="error-label" ng-show="produitForm.produitPrix.$error.required">le prix doit etre fourni</span>    
+        <span class="error-label" ng-show="produitForm.produitPrix.$error.min">le prix ne peut etre negatif</span>
+        <span class="error-label" ng-show="produitForm.produitPrix.$error.max">le prix doit rester raisonnable</span>
+        </span>
+        
     </div>
     <div class="form-group">
         <label for="produitPoids">poids</label>
@@ -26,7 +42,7 @@
                 class="form-control"
                 ng-model="newProduit.poids" />
     </div>
-    <button type="submit" class="btn btn-primary btn-block">
+    <button type="submit" ng-disabled="produitForm.$invalid" class="btn btn-primary btn-block">
         Add
     </button>
 </form>

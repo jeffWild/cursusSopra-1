@@ -24,16 +24,20 @@ angular.module("produitApp")
             }
 
             $scope.saveProduit= function(produit) {
-               produitService.save(produit)
-                   .then(function(reponse) {
-                       console.log("save successfull");
-                       console.log(reponse);
-                       // revenir a la page d'acceuil
-                       $location.url("/produits");
-                   }, function(reponse) {
-                       console.log("error on save");
-                       console.log(reponse);
-                   });
+                console.log($scope.produitForm);
+                // ne sauvegarder que si valide
+               if ($scope.produitForm.$valid) {
+                    produitService.save(produit)
+                        .then(function(reponse) {
+                            console.log("save successfull");
+                            console.log(reponse);
+                            // revenir a la page d'acceuil
+                            $location.url("/produits");
+                        }, function(reponse) {
+                            console.log("error on save");
+                            console.log(reponse);
+                        });
+                }
            };
 
        });
