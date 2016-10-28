@@ -1,7 +1,7 @@
 angular.module("produitApp", ["ngRoute"])
        .constant("serverUrl",
                  'http://localhost:8080/springMVCProduitForm/')
-       .config(function($routeProvider) {
+       .config(function($routeProvider, produitServiceProvider, serverUrl) {
            // le service que l'on configure est "route"
            // donc on inject "routeProvider" dans la fonction
            // config
@@ -21,4 +21,6 @@ angular.module("produitApp", ["ngRoute"])
                 {
                     templateUrl: "views/produitListe.html"   
                 });
+           // configuration de mon service de requettage de produits
+           produitServiceProvider.setUrlBase(serverUrl);
        });

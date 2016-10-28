@@ -1,14 +1,12 @@
 angular.module("produitApp")
        .controller("produitEditCtrl",
-        function($scope, $http, $location, serverUrl) {
+        function($scope, $location, produitService) {
 
             $scope.saveProduit= function(produit) {
                if (angular.isUndefined(produit.id)) {
                    produit.id = 0;
                }
-               $http.post(
-                   serverUrl + 'produit/save',
-                   produit)
+               produitService.save(produit)
                    .then(function(reponse) {
                        console.log("save successfull");
                        console.log(reponse);
