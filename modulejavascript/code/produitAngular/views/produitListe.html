@@ -1,10 +1,13 @@
 <div class="container" ng-controller="produitListCtrl" >
 	<h1>liste produits</h1>
     <div>
-        <span ng-repeat="page in pages">
-            <a href="#" ng-click="setCurrentPage(page)">{{page}}</a>
-            <span ng-hide="$last">,</span>
-        </span>
+        <ul class="pagination">
+            <li ng-repeat="page in pages">
+                <a href="#" ng-click="setCurrentPage(page)">
+                    {{page}}
+                </a>
+            </li>
+        </ul>
     </div>
  	<table class="table table-striped">
 		<thead>
@@ -22,13 +25,17 @@
             <td>{{produit.prix | currency : '€'}}</td>
             <td>{{produit.poids}}</td>
             <td>
-                <button class="btn btn-danger btn-block"
-                        ng-click="supprimerProduit(produit.id)" >
-                    supprimer
-                </button>
-                <button class="btn btn-success btn-block">
-                    acheter
-                </button>
+                <div class="btn-group">
+                    <button class="btn btn-danger"
+                            ng-click="supprimerProduit(produit.id)" >
+                        <span class="glyphicon glyphicon-remove pull-left"></span>
+                        <span class="pull-right">supprimer</span>
+                    </button>
+                    <button class="btn btn-success">
+                        <span class="glyphicon glyphicon-eur pull-left"></span>
+                        <span>acheter</span>
+                    </button>
+                </div>
             </td>
         </tr>
 	</table>

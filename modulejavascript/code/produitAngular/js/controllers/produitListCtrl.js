@@ -2,11 +2,16 @@ angular.module("produitApp")
        .controller("produitListCtrl", function($scope, $http, serverUrl) {
            $scope.pages = [];
            $scope.currentPage = 0;
+           
            $scope.setCurrentPage= function(noPage){
                $scope.currentPage = noPage;
                console.log("new page =" + noPage); 
                $scope.refresh();
            };
+           $scope.isPageActive= function(noPage){
+              $scope.currentPage == noPage;
+           };
+           
 
            $scope.champTri = 'prix';
            $scope.setChampTri = function(nomChamp) {
