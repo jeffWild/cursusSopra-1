@@ -7,19 +7,28 @@ angular.module("produitApp", ["ngRoute"])
            // config
            $routeProvider.when("/produits", 
                 {
-                    templateUrl: "views/produitListe.html"   
+                    templateUrl: "views/produitListe.html",
+                    controller: 'produitListCtrl'   
                 });
-           $routeProvider.when("/produitEdit", 
+           $routeProvider.when("/produitCreate", 
                 {
-                    templateUrl: "views/produitEdit.html"   
+                    templateUrl: "views/produitEdit.html",
+                    controller: 'produitEditCtrl'   
                 });
+           $routeProvider.when("/produitEdit/:pid", 
+                {
+                    templateUrl: "views/produitEdit.html",
+                    controller: 'produitEditCtrl'   
+                });
+                
            $routeProvider.when("/about", 
                 {
                     templateUrl: "views/about.html"   
                 });
            $routeProvider.otherwise( 
                 {
-                    templateUrl: "views/produitListe.html"   
+                    templateUrl: "views/produitListe.html",
+                    controller: 'produitListCtrl'  
                 });
            // configuration de mon service de requettage de produits
            produitServiceProvider.setUrlBase(serverUrl);

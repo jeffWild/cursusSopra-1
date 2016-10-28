@@ -16,13 +16,15 @@ angular.module("produitApp")
                         + noPage + "&taillePage=" + taillePage);
         },
         findById : function(id) {
-
+                return $http.get(urlbase + "produit/find/" + id);
         },
         save : function(p) {
-                return $http.post(urlbase + 'produit/save', p);
+            return $http.post(urlbase + 'produit/save', p);
         },
         remove : function(id) {
-
+            // toujours passer un objet au post
+            // meme vide, pour que spring ne nous bloque pas
+            return $http.post(urlbase + "produit/remove/" + id, {});
         }
     }
     //---------------------------------------------

@@ -1,6 +1,6 @@
 angular.module("produitApp")
        .controller("produitListCtrl", 
-                    function($scope, produitService) {
+                    function($scope, $location, produitService) {
            $scope.pages = [];
            $scope.currentPage = 0;
            
@@ -36,6 +36,17 @@ angular.module("produitApp")
                         console.log(reponse);
                     });
            };
-
+           $scope.editerProduit = function(pid) {
+               $location.url("/produitEdit/" + pid);
+           };
+           $scope.supprimerProduit = function(pid) {
+               produitService.remove(pid)
+                             .then(function(reponse) {
+                                 $scope.refresh();
+                             }, function(reponse) {
+                                 console.log("erreur a la suppression");
+                             });
+           };
+           
            $scope.refresh();
        });
