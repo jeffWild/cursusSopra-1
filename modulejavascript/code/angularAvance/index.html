@@ -25,8 +25,40 @@
             </div>
         </div>
     </nav>
-<div class="container">
-    
+<div class="container" ng-controller="rootController">
+    <h2>controller racine</h2>
+    <h3>{{message}}</h3>
+    <h3>{{compteur}}</h3>
+    <h3>{{data.compteur}}</h3>
+    <h3>{{compteur2}}</h3>
+    <hr />
+    <div class="well" ng-controller="childController">
+        <h2>controller enfant</h2>
+        <h3>{{salutation}}</h3>
+        <h3>{{message}}</h3>
+        <button class="btn btn-block btn-primary"
+                ng-click="incremente()">
+            incremente
+        </button>
+        <button class="btn btn-block btn-success"
+                ng-click="emitEvent()">
+            emettre event
+        </button>
+        <button class="btn btn-block btn-success"
+                ng-click="broadcastEvent()">
+            broadcast Event
+        </button>
+        
+        <h3>{{compteur}}</h3>
+        <hr />
+        <div class="well" ng-controller="grandChildController">
+            <button class="btn btn-block btn-primary"
+                ng-click="incremente()">
+                incremente
+            </button>  
+            <h3>{{compteur}}</h3>
+        </div>
+    </div>
 </div>
 
 </body>
