@@ -9,16 +9,33 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
+
 @Entity
 public class Image {
+	
+	public  class ImageView {
+		// vue restreinte
+	}
+	public class ImageVIewExtended extends ImageView {
+		// vue complete
+	}
+	
+	@JsonView(ImageView.class)
 	private int id;
+	@JsonView(ImageView.class)
 	private String name; // nomage de l'image dans mon application
+	@JsonView(ImageVIewExtended.class)
 	private String fileName;
+	@JsonView(ImageVIewExtended.class)
 	private String contentType;
+	@JsonView(ImageVIewExtended.class)
 	private long fileSize;
 	
 	private Set<Tag> tags;
 	
+	@JsonIgnore
 	@ManyToMany
 	public Set<Tag> getTags() {
 		if (tags == null)
@@ -28,9 +45,11 @@ public class Image {
 	}
 	public void setTags(Set<Tag> tags) {this.tags = tags;}
 	
+	
 	@Id @GeneratedValue
 	public int getId() {return id;}
 	public void setId(int id) {this.id = id;}
+	
 	
 	@Column(length=100)
 	public String getName() {return name;}

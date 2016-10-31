@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.courtalon.superGallerie.metier.Image;
 import com.courtalon.superGallerie.repositories.ImageRepository;
+import com.fasterxml.jackson.annotation.JsonView;
 
 import java.io.File;
 import java.io.IOException;
@@ -44,6 +46,25 @@ public class ImageController {
 	public Page<Image> liste(@PageableDefault(page=0, size=12) Pageable pageRequest){
 		return getImageRepository().findAll(pageRequest);	
 	}
+	
+	/*@RequestMapping(value="images",
+			method=RequestMethod.GET,
+			produces="application/json")
+	@ResponseBody
+	//@JsonView(Image.ImageView.class)
+	@JsonView(Image.ImageVIewExtended.class)
+	public Iterable<Image> listeNoPagination(){
+		return getImageRepository().findAll();	
+	}*/
+
+	@RequestMapping(value="gallerie", method=RequestMethod.GET)
+	public ModelAndView gallerie() {
+		ModelAndView mv = new ModelAndView("gallerie");
+		mv.addObject("images", getImageRepository().findAll());
+		return mv;
+	}
+	
+	
 	@RequestMapping(value="images/upload",
 					method=RequestMethod.POST,
 					produces="application/json")
