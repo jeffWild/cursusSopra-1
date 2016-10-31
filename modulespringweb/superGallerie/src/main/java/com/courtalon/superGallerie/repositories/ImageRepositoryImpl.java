@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.courtalon.superGallerie.utils.FileStorageManager;
 
-public class ImgeRepositoryImpl implements ImageRepositoryCustom {
+public class ImageRepositoryImpl implements ImageRepositoryCustom {
 
 	@Autowired
 	private FileStorageManager fileStorageManager;
