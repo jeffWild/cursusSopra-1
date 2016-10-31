@@ -36,7 +36,7 @@ public class FileStorageManager {
 			log.error("unkwown file in FileSTorageManager");
 			return null;
 		}
-		File f = new File(storageRoot.getAbsolutePath() 
+		File f = new File(entityRep.getAbsolutePath() 
 						+ File.separatorChar
 						+ String.format("file_%07d", id));
 		if (f.exists() && f.isFile()) {

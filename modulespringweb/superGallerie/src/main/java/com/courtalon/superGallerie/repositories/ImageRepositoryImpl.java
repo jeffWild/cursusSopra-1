@@ -9,6 +9,7 @@ import com.courtalon.superGallerie.utils.FileStorageManager;
 
 public class ImageRepositoryImpl implements ImageRepositoryCustom {
 
+	// attention, ne marche pas si sur getter dans ce cas???
 	@Autowired
 	private FileStorageManager fileStorageManager;
 	public FileStorageManager getFileStorageManager() {return fileStorageManager;}
