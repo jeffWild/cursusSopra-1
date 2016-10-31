@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html ng-app="todoApp" >
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>super productive todo</title>
+    <link href="css/bootstrap.css" rel="stylesheet" />
+    <link href="css/style.css" rel="stylesheet" />
+    <script type="text/javascript" src="js/vendor/jquery-3.1.1.js"></script>
+    <script type="text/javascript" src="js/vendor/bootstrap.js"></script>
+    <script type="text/javascript" src="js/vendor/angular.js"></script>
+    <script type="text/javascript" src="js/vendor/angular-route.js"></script>
+    <script type="text/javascript" src="js/todoApp.js"></script>
+    <script type="text/javascript" src="js/services/tacheService.js"></script>
+    <script type="text/javascript" src="js/controllers/tacheListCtrl.js"></script>
+    <script type="text/javascript" src="js/controllers/tacheEditCtrl.js"></script>
+</head>
+<body>
+    <nav class="navbar navbar-inverse">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#/taches">TodoManager</a>
+            </div>
+            <div id="navbar">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="active"><a href="#/tacheCreate">ajouter</a></li>
+                    <li class="active"><a href="#/about">about</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+<div class="container" ng-view >
+</div>
+
+</body>
+</html>

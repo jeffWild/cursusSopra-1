@@ -1,0 +1,77 @@
+<h1>Edition Tache</h1>
+<form name="tacheForm"
+        ng-submit="saveTache(newTache)"
+        novalidate>
+    <input type="hidden"
+            name="tacheID"
+            ng-model="newTache.id" />
+    <div class="form-group">
+        <label for="tacheTitre">titre</label>
+        <input type="text"
+                name="tacheTitre"
+                class="form-control"
+                ng-model="newTache.titre"
+                ng-required="true"
+                ng-minlength="5"
+                ng-maxlength="50" />
+        <span ng-show="tacheForm.tacheTitre.$dirty">
+            <span class="error-label" ng-show="tacheForm.tacheTitre.$error.required">le titre doit etre fourni</span>    
+            <span class="error-label" ng-show="tacheForm.tacheTitre.$error.minlength">le titre est trop court</span>
+            <span class="error-label" ng-show="tacheForm.tacheTitre.$error.maxlength">le titre est trop long</span>
+        </span>
+    </div>
+     <div class="form-group">
+        <label for="tacheContexte">contexte</label>
+        <input type="text"
+                name="tacheContexte"
+                class="form-control"
+                ng-model="newTache.contexte"
+                ng-required="true"
+                ng-minlength="5"
+                ng-maxlength="50" />
+        <span ng-show="tacheForm.tacheContexte.$dirty">
+            <span class="error-label" ng-show="tacheForm.tacheContexte.$error.required">le contexte doit etre fourni</span>    
+            <span class="error-label" ng-show="tacheForm.tacheContexte.$error.minlength">le contexte est trop court</span>
+            <span class="error-label" ng-show="tacheForm.tacheContexte.$error.maxlength">le contexte est trop long</span>
+        </span>
+    </div>
+    <div class="form-group">
+        <label for="tachePriorite">priorite</label>
+        <input type="number"
+                name="tachePriorite"
+                class="form-control"
+                ng-model="newTache.priorite"
+                ng-required="true"
+                ng-min="1"
+                ng-max="10" />
+        <span ng-show="tacheForm.tachePriorite.$dirty">
+        <span class="error-label" ng-show="tacheForm.tachePriorite.$error.required">la priorite doit etre fourni</span>    
+        <span class="error-label" ng-show="tacheForm.tachePriorite.$error.min">la priorite ne peut etre inférieur a 1</span>
+        <span class="error-label" ng-show="tacheForm.tachePriorite.$error.max">la priorite ne peut dépasser 10</span>
+        </span>
+    </div>
+    <div class="form-group">
+        <label for="tacheTermine">terminée</label>
+        <input type="checkbox"
+                name="tacheTermine"
+                class="form-control"
+                ng-model="newTache.termine" />
+    </div>
+    <div class="form-group">
+        <label for="tacheDateLimite">date limite</label>
+        <input type="date"
+                name="tacheDateLimite"
+                class="form-control"
+                ng-model="newTache.dateLimite"
+                ng-required="true"
+                ng-min="{{today}}"/>
+        <span ng-show="tacheForm.tacheDateLimite.$dirty">
+        <span class="error-label" ng-show="tacheForm.tacheDateLimite.$error.required">la date doit etre fournie</span>    
+        <span class="error-label" ng-show="tacheForm.tacheDateLimite.$error.min">la date ne peut etre dans le passé</span>
+        </span>
+    </div>
+    
+    <button type="submit" ng-disabled="tacheForm.$invalid" class="btn btn-primary btn-block">
+        Add
+    </button>
+</form>

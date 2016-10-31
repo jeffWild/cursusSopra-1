@@ -1,0 +1,45 @@
+<h1>liste taches</h1>
+<div>
+    <ul class="pagination">
+        <li ng-repeat="page in pages">
+            <a href="#" ng-click="setCurrentPage(page)">
+                {{page}}
+            </a>
+        </li>
+    </ul>
+</div>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th ng-click="setChampTri('id')">ID</th>
+            <th ng-click="setChampTri('titre')">Titre</th>
+            <th ng-click="setChampTri('contexte')">Contexte</th>
+            <th ng-click="setChampTri('priorite')">Priorite</th>
+            <th>Terminée</th>
+            <th ng-click="setChampTri('dateLimite')">date limite</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tr ng-repeat="tache in taches | orderBy: champTri track by $index" >
+        <td>{{tache.id}}</td>
+        <td>{{tache.titre}}</td>
+        <td>{{tache.contexte}}</td>
+        <td>{{tache.priorite}}</td>
+        <td>{{tache.termine}}</td>
+        <td>{{tache.dateLimite | date: 'yyyy-MM-dd'}}</td>
+        <td>
+            <div class="btn-group">
+                <button class="btn btn-danger"
+                        ng-click="supprimerTache(tache.id)" >
+                    <span class="glyphicon glyphicon-remove pull-left"> </span>
+                    <span class="pull-right">supprimer</span>
+                </button>
+                <button class="btn btn-primary"
+                        ng-click="editerTache(tache.id)" >
+                    <span class="glyphicon glyphicon-pencil pull-left"> </span>
+                    <span class="pull-right">editer</span>
+                </button>
+            </div>
+        </td>
+    </tr>
+</table>
