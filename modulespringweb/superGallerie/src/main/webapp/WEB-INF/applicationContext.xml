@@ -26,6 +26,9 @@
 <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"/>
 <jpa:repositories base-package="com.courtalon.superGallerie.repositories"/>
 
+<!-- pour que mon repository Custom récupere bien le FileStorageManager -->
+<context:component-scan base-package="com.courtalon.superGallerie.repositories" />
+
 <context:property-placeholder location="classpath*:database.properties"/>
 
 <bean id="dataSource" 

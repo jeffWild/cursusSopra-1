@@ -15,6 +15,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.courtalon.superGallerie.metier.Image;
 import com.courtalon.superGallerie.repositories.ImageRepository;
 
+import java.io.IOException;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -44,10 +46,17 @@ public class ImageController {
 		log.info("taille fichier: " + fichier.getSize());
 		log.info("type contenu: " + fichier.getContentType());
 
-		return new Image(0, fichier.getOriginalFilename(),
+		Image img = new Image(0, fichier.getOriginalFilename(),
 						fichier.getOriginalFilename(),
 						fichier.getContentType(),
 						fichier.getSize());
+		
+		img = getImageRepository().save(img);
+		try {
+			getImageRepository().saveImageFile(img.getId(), fichier.getInputStream());
+		} catch (IOException e) {log.error(e);}
+		
+		return img;
 	}
 	
 }
