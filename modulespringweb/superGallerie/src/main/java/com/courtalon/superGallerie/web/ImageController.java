@@ -28,6 +28,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -52,6 +53,24 @@ public class ImageController {
 		// par findAll vers/dans un JsonPageable qui est annoté
 		// avec notre @JsonView
 		JsonPageable<Image> p = JsonPageable.fromPage(getImageRepository().findAll(pageRequest));
+		log.info("no page = " + p.getNumber());
+		log.info("taille page = " + p.getSize());
+		return 	p;
+	}
+	
+	// images/searchWithTags/2,5,8
+	@RequestMapping(value="images/searchWithTags/{tagsId:[0-9,]+}",
+			method=RequestMethod.GET,
+			produces="application/json")
+	@ResponseBody
+	@JsonView(ImageView.class)
+	public Page<Image> listeByTags(
+			@PageableDefault(page=0, size=12) Pageable pageRequest,
+			@PathVariable("tagsId") List<Integer> tagsId){
+		
+		JsonPageable<Image> p = JsonPageable
+								.fromPage(getImageRepository()
+								.searchImageWithTags(pageRequest, tagsId));
 		log.info("no page = " + p.getNumber());
 		log.info("taille page = " + p.getSize());
 		return 	p;
