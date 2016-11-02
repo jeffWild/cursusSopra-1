@@ -1,0 +1,36 @@
+<h1>gallerie</h1>
+<div class="row">
+    Drop file:
+    <div ngf-drop ngf-select ng-model="files"
+         class="drop-box"
+         ngf-drag-over-class="'dragover'"
+         ngf-multiple="true" ngf-allow-dir="true"
+         accept="images/*">
+         drop image here to upload
+    </div>
+    <div ngf-no-file-drop>
+        this browser does not support file drag and drop
+    </div>
+    files:
+    <ul>
+        <li ng-repeat="f in files">
+            {{f.name}} {{f.$error}} {{f.$errorParam}}
+        </li> 
+    </ul>
+    Progress:
+    <div ng-repeat="(name, progress) in fileProgressBars">
+        <uib-progressbar max="100" value="progress">
+            <span style="color:white; white-space:nowrap;">
+                {{name}} {{progress}}%
+            </span>
+        </uib-progressbar>
+    </div>
+    <div>
+        <uib-alert ng-repeat="alert in uploadAlerts"
+                   type="{{alert.type}}"
+                   dismiss-on-timeout="4000"
+                   close="closeAlertUpload($index)" >
+                   {{alert.message}}
+        </uib-alert>
+    </div>
+</div>

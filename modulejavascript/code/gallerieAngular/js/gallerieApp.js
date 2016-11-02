@@ -1,4 +1,4 @@
-angular.module("gallerieApp", ["ngRoute"])
+angular.module("gallerieApp", ["ngRoute", "ngFileUpload", "ui.bootstrap"])
        .constant("serverUrl",
                  'http://localhost:8080/superGallerie/')
        .config(function($routeProvider, imageServiceProvider, serverUrl) {
