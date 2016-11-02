@@ -39,7 +39,10 @@
 		  <property name="maxUploadSize" value="10000000"/>
 	</bean>
 
+
+
 	<mvc:resources mapping="/resources/**" location="/resources/" />
+
 
 	<mvc:annotation-driven>
 		<mvc:argument-resolvers>
@@ -48,6 +51,13 @@
 				<property name="sizeParameterName" value="pageSize" />
 			</bean>
 		</mvc:argument-resolvers>
+		<mvc:message-converters>
+			<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+				<property name="objectMapper">
+					<bean class="com.courtalon.superGallerie.utils.HibernateAwareObjectMapper" />
+				</property>
+			</bean>
+		</mvc:message-converters>
 	</mvc:annotation-driven>
 
 </beans>

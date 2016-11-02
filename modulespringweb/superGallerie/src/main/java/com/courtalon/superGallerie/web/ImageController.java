@@ -20,7 +20,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.courtalon.superGallerie.metier.Image;
-import com.courtalon.superGallerie.metier.Image.ImageVIewExtended;
 import com.courtalon.superGallerie.metier.Image.ImageView;
 import com.courtalon.superGallerie.repositories.ImageRepository;
 import com.courtalon.superGallerie.utils.JsonPageable;
@@ -69,7 +68,7 @@ public class ImageController {
 					method=RequestMethod.POST,
 					produces="application/json")
 	@ResponseBody
-	@JsonView(ImageVIewExtended.class)
+	@JsonView(ImageView.class)
 	public Image upload(@RequestParam("fichier") MultipartFile fichier) {
 		log.info("nom fichier: " + fichier.getOriginalFilename());
 		log.info("taille fichier: " + fichier.getSize());

@@ -27,18 +27,28 @@ public class Image {
 	private int id;
 	@JsonView(ImageView.class)
 	private String name; // nomage de l'image dans mon application
-	@JsonView(ImageVIewExtended.class)
+	@JsonView(ImageView.class)
 	private String fileName;
-	@JsonView(ImageVIewExtended.class)
+	@JsonView(ImageView.class)
 	private String contentType;
-	@JsonView(ImageVIewExtended.class)
+	@JsonView(ImageView.class)
 	private long fileSize;
 	
+	/*
+	 * 
+	 * ATTENTION, le @JsonIgnore (s'il y en a  un) determinera si jackson
+	 * utilise les attributs ou getter (comme @Id pour JPA)
+	 * 
+	 * et donc Jackson IGNORERA silencieusement les @JsonView s'ils ne sont
+	 * par sur la même chose (attribut ou getter) que @JsonIgnore
+	 * 
+	 */
+	@JsonView(ImageVIewExtended.class)
 	private Set<Tag> tags;
 	
-	@JsonIgnore
 	@ManyToMany
 	public Set<Tag> getTags() {
+		
 		if (tags == null)
 			tags = new HashSet<>();
 		return tags;
