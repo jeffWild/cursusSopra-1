@@ -10,10 +10,12 @@
 </div>
 <div class="row">
     <div ng-repeat="image in images track by $index"
-         class="col-md-4 col-lg-4 cols-xs-4 thumb">
+         class="col-md-4 col-xs-4 thumb">
          <a class="thumbnail" href="#">
-           <img class="img-thumbnail" 
-             ng-src="http://localhost:8080/superGallerie/images/data/{{image.id}}" />
+           <img class="img-responsive"
+                ng-src="http://localhost:8080/superGallerie/images/data/{{image.id}}"
+                alt="{{image.name}}"
+                >
          </a>
     </div>
 </div>
