@@ -12,8 +12,8 @@ angular.module("gallerieApp")
      //--------------Service-------------------------------              
     return  {
         liste : function(noPage, taillePage) {
-                return $http.get(urlbase + "images?noPage="
-                        + noPage + "&taillePage=" + taillePage);
+                return $http.get(urlbase + "images?pageNo="
+                        + noPage + "&pageSize=" + taillePage);
         },
         findById : function(id) {
                 return $http.get(urlbase + "images/" + id);
