@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html ng-app="gallerieApp" >
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>gallerie biobio</title>
+    <link href="css/bootstrap.css" rel="stylesheet" />
+    <link href="css/style.css" rel="stylesheet" />
+    <script type="text/javascript" src="js/vendor/jquery-3.1.1.js"></script>
+    <script type="text/javascript" src="js/vendor/bootstrap.js"></script>
+    <script type="text/javascript" src="js/vendor/angular.js"></script>
+    <script type="text/javascript" src="js/vendor/angular-route.js"></script>
+    <script type="text/javascript" src="js/gallerieApp.js"></script>
+    <script type="text/javascript" src="js/services/imageService.js"></script>
+    <script type="text/javascript" src="js/controllers/imageListCtrl.js"></script>
+</head>
+<body>
+    <nav class="navbar navbar-inverse">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#/images">gallerie APP</a>
+            </div>
+            <div id="navbar">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="active"><a href="#/imageUpload">ajouter</a></li>
+                    <li class="active"><a href="#/about">about</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+<div class="container" ng-view >
+</div>
+
+</body>
+</html>
