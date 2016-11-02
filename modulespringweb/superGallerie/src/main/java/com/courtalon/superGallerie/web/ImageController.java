@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.courtalon.superGallerie.metier.Image;
+import com.courtalon.superGallerie.metier.Image.ImageVIewExtended;
 import com.courtalon.superGallerie.metier.Image.ImageView;
 import com.courtalon.superGallerie.repositories.ImageRepository;
 import com.courtalon.superGallerie.utils.JsonPageable;
@@ -86,6 +87,17 @@ public class ImageController {
 		
 		return img;
 	}
+	
+	@RequestMapping(value="images/{id:[0-9]+}",
+			method=RequestMethod.GET, produces="application/json")
+	@ResponseBody
+	@JsonView(ImageVIewExtended.class)
+	public Image findImage(@PathVariable("id") int id) {
+		log.info("id image: " + id);
+		Image img = getImageRepository().findOne(id);
+		return img;
+	}
+	
 	
 	@RequestMapping(value="images/data/{id:[0-9]+}",
 					method=RequestMethod.GET)
