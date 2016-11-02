@@ -20,7 +20,10 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.courtalon.superGallerie.metier.Image;
+import com.courtalon.superGallerie.metier.Image.ImageVIewExtended;
+import com.courtalon.superGallerie.metier.Image.ImageView;
 import com.courtalon.superGallerie.repositories.ImageRepository;
+import com.courtalon.superGallerie.utils.JsonPageable;
 import com.fasterxml.jackson.annotation.JsonView;
 
 import java.io.File;
@@ -43,19 +46,16 @@ public class ImageController {
 					method=RequestMethod.GET,
 					produces="application/json")
 	@ResponseBody
+	@JsonView(ImageView.class)
 	public Page<Image> liste(@PageableDefault(page=0, size=12) Pageable pageRequest){
-		return getImageRepository().findAll(pageRequest);	
+		// ici, on "converti/encapsule" la Page original renvoyée
+		// par findAll vers/dans un JsonPageable qui est annoté
+		// avec notre @JsonView
+		JsonPageable<Image> p = JsonPageable.fromPage(getImageRepository().findAll(pageRequest));
+		log.info("no page = " + p.getNumber());
+		log.info("taille page = " + p.getSize());
+		return 	p;
 	}
-	
-	/*@RequestMapping(value="images",
-			method=RequestMethod.GET,
-			produces="application/json")
-	@ResponseBody
-	//@JsonView(Image.ImageView.class)
-	@JsonView(Image.ImageVIewExtended.class)
-	public Iterable<Image> listeNoPagination(){
-		return getImageRepository().findAll();	
-	}*/
 
 	@RequestMapping(value="gallerie", method=RequestMethod.GET)
 	public ModelAndView gallerie() {
@@ -69,6 +69,7 @@ public class ImageController {
 					method=RequestMethod.POST,
 					produces="application/json")
 	@ResponseBody
+	@JsonView(ImageVIewExtended.class)
 	public Image upload(@RequestParam("fichier") MultipartFile fichier) {
 		log.info("nom fichier: " + fichier.getOriginalFilename());
 		log.info("taille fichier: " + fichier.getSize());

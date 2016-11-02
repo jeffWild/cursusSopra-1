@@ -9,16 +9,17 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
+import com.courtalon.superGallerie.utils.JsonPageable;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
 
 @Entity
 public class Image {
 	
-	public  class ImageView {
+	public  static class ImageView extends JsonPageable.PaginatedResult {
 		// vue restreinte
 	}
-	public class ImageVIewExtended extends ImageView {
+	public static class ImageVIewExtended extends ImageView {
 		// vue complete
 	}
 	
