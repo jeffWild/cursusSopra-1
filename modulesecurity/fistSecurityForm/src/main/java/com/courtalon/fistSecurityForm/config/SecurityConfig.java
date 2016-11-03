@@ -34,10 +34,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 								.antMatchers("/user/**")
 								.hasRole("USER")
 								.antMatchers("/public/**")
-								.anonymous().and()	// pour /public, tous le monde y a acces
+								.permitAll().and()
 			.httpBasic().and() // pas de cryptage des connexions (pas de https)
 			.formLogin(); // spring proposera le login via un formulaire web
-								
+
+		
+//		.authenticated() // quelqu'un qui est authentifié
+//		.antMatchers("/public/**")
+//		.anonymous().and()// pour /public, tous le monde y a acces
+
 	}
 	
 	
