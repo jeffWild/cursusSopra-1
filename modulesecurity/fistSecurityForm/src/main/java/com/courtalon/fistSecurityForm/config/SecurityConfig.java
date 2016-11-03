@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 // @Configuration: cette annotation indique a spring que cette classe sert a configurer
 // notre application
@@ -35,7 +36,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.authoritiesByUsernameQuery("...");
 		*/
 		auth.userDetailsService(utilisateurDetailsService)
-			.passwordEncoder(new PlaintextPasswordEncoder()); //ATTENTION, NE PAS UTILISER CELUI-CI
+			.passwordEncoder(new BCryptPasswordEncoder());
+			//.passwordEncoder(new PlaintextPasswordEncoder()); //ATTENTION, NE PAS UTILISER CELUI-CI
 	}
 
 	// on configure quel role a acces a quel partie du site
