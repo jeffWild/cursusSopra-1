@@ -30,10 +30,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests().antMatchers("/admin/**") // filtrage des requettes pour /admin
-								.hasRole("ADMIN").and()  // uniquement ceux qui ont le role "ADMIN"
-			.authorizeRequests().antMatchers("/users/**")
-								.hasRole("USER").and()
-			.authorizeRequests().antMatchers("/public/**")
+								.hasRole("ADMIN")  // uniquement ceux qui ont le role "ADMIN"
+								.antMatchers("/user/**")
+								.hasRole("USER")
+								.antMatchers("/public/**")
 								.anonymous().and()	// pour /public, tous le monde y a acces
 			.httpBasic().and() // pas de cryptage des connexions (pas de https)
 			.formLogin(); // spring proposera le login via un formulaire web
