@@ -1,6 +1,8 @@
 package com.courtalon.fistSecurityForm.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.encoding.PlaintextPasswordEncoder;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -12,6 +14,11 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @EnableWebSecurity //activer la securité dédiee aux app webs
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+	@Autowired
+	private UtilisateurDetailsService utilisateurDetailsService;
+	public UtilisateurDetailsService getUtilisateurDetailsService() {return utilisateurDetailsService;}
+	public void setUtilisateurDetailsService(UtilisateurDetailsService utilisateurDetailsService) {this.utilisateurDetailsService = utilisateurDetailsService;}
+
 	// cette méthode configure l'identification des utilisateurs
 	// en général, cela passe par une table en base de donnée
 	// et un formulaire de login
@@ -20,9 +27,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	// comptes utilisateurs et ce a quoi ils on droit "authorities"
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.inMemoryAuthentication()
+		/*auth.inMemoryAuthentication()
 			.withUser("admin").password("admin").roles("USER", "ADMIN").and()
-			.withUser("vincent").password("P@ssw0rd").roles("USER");
+			.withUser("vincent").password("P@ssw0rd").roles("USER");*/
+		/*auth.jdbcAuthentication().dataSource(null)
+			.usersByUsernameQuery("select username, password, enabled form user where username=?")
+			.authoritiesByUsernameQuery("...");
+		*/
+		auth.userDetailsService(utilisateurDetailsService)
+			.passwordEncoder(new PlaintextPasswordEncoder()); //ATTENTION, NE PAS UTILISER CELUI-CI
 	}
 
 	// on configure quel role a acces a quel partie du site
@@ -35,8 +48,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 								.hasRole("USER")
 								.antMatchers("/public/**")
 								.permitAll().and()
-			.httpBasic().and() // pas de cryptage des connexions (pas de https)
-			.formLogin(); // spring proposera le login via un formulaire web
+			.formLogin().and() // spring proposera le login via un formulaire web
+			.httpBasic(); // pas de cryptage des connexions (pas de https)
+ 
 
 		
 //		.authenticated() // quelqu'un qui est authentifié
