@@ -1,0 +1,79 @@
+<h1>edition produit</h1>
+<div class="md-col-6 xs-col-6">
+<form name="produitForm"
+        ng-submit="saveProduit(newProduit)"
+        novalidate>
+    <input type="hidden"
+            name="produitID"
+            ng-model="newProduit.id" />
+    <div class="form-group">
+        <label for="produitNom">nom</label>
+        <input type="text"
+                name="produitNom"
+                class="form-control"
+                ng-model="newProduit.nom"
+                ng-required="true"
+                ng-minlength="3"
+                ng-maxlength="50" />
+        <span ng-show="produitForm.produitNom.$dirty">
+        <span class="error-label" ng-show="produitForm.produitNom.$error.minlength">le champ est trop court</span>
+        <span class="error-label" ng-show="produitForm.produitNom.$error.maxlength">le champ est trop long</span>
+        </span>
+    </div>
+    <div class="form-group">
+        <label for="produitPrix">prix</label>
+        <input type="number"
+                name="produitPrix"
+                class="form-control"
+                ng-model="newProduit.prix"
+                ng-required="true"
+                ng-min="0"
+                ng-max="10000" />
+        <span ng-show="produitForm.produitPrix.$dirty">
+        <span class="error-label" ng-show="produitForm.produitPrix.$error.required">le prix doit etre fourni</span>    
+        <span class="error-label" ng-show="produitForm.produitPrix.$error.min">le prix ne peut etre negatif</span>
+        <span class="error-label" ng-show="produitForm.produitPrix.$error.max">le prix doit rester raisonnable</span>
+        </span>
+        
+    </div>
+    <div class="form-group">
+        <label for="produitPoids">poids</label>
+        <input type="number"
+                name="produitPoids"
+                class="form-control"
+                ng-model="newProduit.poids" />
+    </div>
+    <button type="submit" ng-disabled="produitForm.$invalid" class="btn btn-primary btn-block">
+        Add
+    </button>
+</form>
+</div>
+<div class="col-md-6 col-xs-6" ng-show="existingProduit">
+    Drop file:
+    <div ngf-drop ngf-select ng-model="files"
+         class="drop-box"
+         ngf-drag-over-class="'dragover'"
+         ngf-multiple="true" ngf-allow-dir="true"
+         accept="images/*">
+         drop image here to upload
+    </div>
+    <div ngf-no-file-drop>
+        this browser does not support file drag and drop
+    </div>
+    Progress:
+    <div ng-repeat="(name, progress) in fileProgressBars">
+        <uib-progressbar max="100" value="progress">
+            <span style="color:white; white-space:nowrap;">
+                {{name}} {{progress}}%
+            </span>
+        </uib-progressbar>
+    </div>
+    <div>
+        <uib-alert ng-repeat="alert in uploadAlerts"
+                   type="{{alert.type}}"
+                   dismiss-on-timeout="4000"
+                   close="closeAlertUpload($index)" >
+                   {{alert.message}}
+        </uib-alert>
+    </div>
+</div>

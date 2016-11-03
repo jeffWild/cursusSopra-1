@@ -1,0 +1,46 @@
+<h1>liste produits</h1>
+<div>
+    <ul class="pagination">
+        <li ng-repeat="page in pages">
+            <a href="#" ng-click="setCurrentPage(page)">
+                {{page}}
+            </a>
+        </li>
+    </ul>
+</div>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th ng-click="setChampTri('id')">ID</th>
+            <th ng-click="setChampTri('nom')">Nom</th>
+            <th ng-click="setChampTri('prix')">prix</th>
+            <th ng-click="setChampTri('poids')">Poids</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tr ng-repeat="produit in produits | orderBy: champTri track by $index" >
+        <td>{{produit.id}}</td>
+        <td>{{produit.nom}}</td>
+        <td>{{produit.prix | currency : '€'}}</td>
+        <td>{{produit.poids}}</td>
+        <td>
+            <div class="btn-group">
+                <button class="btn btn-danger"
+                        ng-click="supprimerProduit(produit.id)" >
+                    <span class="glyphicon glyphicon-remove pull-left"> </span>
+                    <span class="pull-right">supprimer</span>
+                </button>
+                <button class="btn btn-primary"
+                        ng-click="editerProduit(produit.id)" >
+                    <span class="glyphicon glyphicon-pencil pull-left"> </span>
+                    <span class="pull-right">editer</span>
+                </button>
+                <button class="btn btn-success"
+                        ng-click="detailProduit(produit.id)">
+                    <span class="glyphicon glyphicon-eur pull-left"> </span>
+                    <span>details</span>
+                </button>
+            </div>
+        </td>
+    </tr>
+</table>

@@ -1,16 +1,42 @@
 package com.courtalon.springMVCProduitForm.metier;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+import com.courtalon.springMVCProduitForm.utils.JsonPageable;
+import com.fasterxml.jackson.annotation.JsonView;
 
 
 @Entity
 public class Produit {
+	
+	public static class ProduitView extends JsonPageable.PaginatedResult {}
+	public static class ProduitAndImageView extends ProduitView {}
+	
+	@JsonView(ProduitView.class)
 	private int id;
+	@JsonView(ProduitView.class)
 	private String nom;
+	@JsonView(ProduitView.class)
 	private double prix;
+	@JsonView(ProduitView.class)
 	private double poids;
+	@JsonView(ProduitAndImageView.class)
+	private Set<Image> images;
+	
+	
+	@OneToMany(mappedBy="produit")
+	public Set<Image> getImages() {
+		if (images == null)
+			images = new HashSet<>();
+		return images;
+	}
+	public void setImages(Set<Image> images) {this.images = images;}
 	
 	@Id @GeneratedValue
 	public int getId() {

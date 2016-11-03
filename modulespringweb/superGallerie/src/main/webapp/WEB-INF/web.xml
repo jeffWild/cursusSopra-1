@@ -5,7 +5,7 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
   <display-name>spring mvc with spring-data</display-name>
 
-  <filter>
+ <!--  <filter>
   	<filter-name>encoding-filter</filter-name>
   	<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
   	<init-param>
@@ -14,10 +14,10 @@
   	</init-param>
   	<init-param>
   		<param-name>forceEncoding</param-name>
-  		<param-value>true</param-value>
+  		<param-value>false</param-value>
   	</init-param>
   </filter>
-  
+   -->
    <!-- ce filtre authorise les requettes ajax en provenance d'autres serveurs-->
   <filter>
   	<filter-name>CorsFilter</filter-name>
@@ -32,12 +32,12 @@
   	<filter-name>CorsFilter</filter-name>
   	<url-pattern>/*</url-pattern>
   </filter-mapping>
-  
+  <!-- 
   <filter-mapping>
   	<filter-name>encoding-filter</filter-name>
   	<url-pattern>/*</url-pattern>
   </filter-mapping>
-  
+   -->
 
   <servlet>
         <servlet-name>spring-mvc</servlet-name>

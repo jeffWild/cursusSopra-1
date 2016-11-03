@@ -18,7 +18,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.courtalon.springMVCProduitForm.metier.Produit;
+import com.courtalon.springMVCProduitForm.metier.Produit.ProduitAndImageView;
+import com.courtalon.springMVCProduitForm.metier.Produit.ProduitView;
 import com.courtalon.springMVCProduitForm.repositories.ProduitRepository;
+import com.fasterxml.jackson.annotation.JsonView;
 
 @Controller
 @RequestMapping(value="/")
@@ -35,17 +38,11 @@ public class IndexController {
 		return "redirect:/Index";
 	}
 
-	
-	@RequestMapping(value = "/Index", method = RequestMethod.GET)
-	public String printWelcome(ModelMap model) {
 
-		model.addAttribute("message", "bonjour depuis spring 3 mvc");
-		return "bonjour";
-	}
-	
 	
 	@RequestMapping(value="/produit", method= RequestMethod.GET, produces="application/json")
 	@ResponseBody
+	@JsonView(ProduitView.class)
 	public Page<Produit> liste(
 			@RequestParam(value= "noPage", required=false, defaultValue="0") int noPage,
 			@RequestParam(value= "taillePage", required=false, defaultValue="5") int taillePage
@@ -55,6 +52,7 @@ public class IndexController {
 	
 	@RequestMapping(value="/produit/filtreNom/{nom}", method= RequestMethod.GET, produces="application/json")
 	@ResponseBody
+	@JsonView(ProduitView.class)
 	public Page<Produit> listeParNom(
 			@PathVariable(value="nom") String nom,
 			@RequestParam(value= "noPage", required=false, defaultValue="0") int noPage,
@@ -65,6 +63,7 @@ public class IndexController {
 	
 	@RequestMapping(value="/produit/filtrePrix/{prix}", method= RequestMethod.GET, produces="application/json")
 	@ResponseBody
+	@JsonView(ProduitView.class)
 	public Page<Produit> listeParPrix(
 			@PathVariable(value="prix") double prix,
 			@RequestParam(value= "noPage", required=false, defaultValue="0") int noPage,
@@ -75,6 +74,7 @@ public class IndexController {
 	
 	@RequestMapping(value="/produit/filtreNomEtPrix/{nom}/{prix}", method= RequestMethod.GET, produces="application/json")
 	@ResponseBody
+	@JsonView(ProduitView.class)
 	public Page<Produit> listeParNomEtPrix(
 			@PathVariable(value="nom") String nom,
 			@PathVariable(value="prix") double prix,
@@ -87,6 +87,7 @@ public class IndexController {
 	
 	@RequestMapping(value="/produit/save",method=RequestMethod.POST,produces="application/json")
 	@ResponseBody
+	@JsonView(ProduitView.class)
 	public Produit saveProduit(@RequestBody Produit p) {
 		// l'annotation @RequestBody va automatiquement
 		// convertir l'objet json transmit dans le corp de la requette
@@ -98,14 +99,16 @@ public class IndexController {
 					method =RequestMethod.GET,
 					produces="application/json")
 	@ResponseBody
+	@JsonView(ProduitAndImageView.class)
 	public Produit findProduit(@PathVariable(value="id") int id) {
-		return getProduitRepository().findOne(id);
+		return getProduitRepository().findOneWithImage(id);
 	}
 
 	@RequestMapping(value="/produit/remove/{id}",
 			method =RequestMethod.POST,
 			produces="application/json")
 	@ResponseBody
+	@JsonView(ProduitView.class)
 	public Produit deleteProduit(@PathVariable(value="id") int id) {
 		Produit p = getProduitRepository().findOne(id);
 		getProduitRepository().delete(p);

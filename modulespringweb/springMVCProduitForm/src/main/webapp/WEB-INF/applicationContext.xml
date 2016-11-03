@@ -26,6 +26,8 @@
 <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"/>
 <jpa:repositories base-package="com.courtalon.springMVCProduitForm.repositories"/>
 
+<context:component-scan base-package="com.courtalon.springMVCProduitForm.repositories" />
+
 <context:property-placeholder location="classpath*:database.properties"/>
 
 <bean id="dataSource" 
@@ -53,5 +55,10 @@
 </bean>
 
 <tx:annotation-driven transaction-manager="transactionManager" />
+
+<bean id="fileStorageManager"
+	  class="com.courtalon.springMVCProduitForm.utils.FileStorageManager">
+	  <property name="storageRoot" value="c:\webStorage"/>
+</bean>
 
 </beans>

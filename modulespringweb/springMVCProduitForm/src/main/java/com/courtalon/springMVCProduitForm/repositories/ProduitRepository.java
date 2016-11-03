@@ -6,7 +6,9 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 import com.courtalon.springMVCProduitForm.metier.Produit;
 
-public interface ProduitRepository extends PagingAndSortingRepository<Produit, Integer> {
+public interface ProduitRepository 
+		extends PagingAndSortingRepository<Produit, Integer>, ProduitRepositoryCustom 
+{
 	
 	Page<Produit> findByNomContaining(String nom, Pageable p);
 	Page<Produit> findByPrixGreaterThanEqual(double prix, Pageable p);

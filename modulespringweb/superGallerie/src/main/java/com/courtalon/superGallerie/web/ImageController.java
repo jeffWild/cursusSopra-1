@@ -127,9 +127,11 @@ public class ImageController {
 		log.info("image = " + img);
 		// configure les meta-informations sur le fichier, nom, taille, type...
 		HttpHeaders responseHeaders = new HttpHeaders();
+		log.info("ct = " + MediaType.parseMediaType(img.getContentType()));
 		responseHeaders.setContentType(MediaType.parseMediaType(img.getContentType()));
 		responseHeaders.setContentLength(img.getFileSize());
-		responseHeaders.setContentDispositionFormData("attachment", img.getFileName());
+		responseHeaders.add("Content-Disposition", "attachment; filename=\"" + img.getFileName() + "\"");
+				//responseHeaders.setContentDispositionFormData("name=\"attachment\"", img.getFileName());
 		
 		File f = getImageRepository().getImageFile(img.getId());
 		

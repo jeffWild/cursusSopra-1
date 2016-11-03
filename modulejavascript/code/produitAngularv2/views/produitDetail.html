@@ -1,0 +1,18 @@
+<h1>detail produit</h1>
+        <h2>ID: {{produit.id}}</h2>
+        <h2>NOM: {{produit.nom}}</h2>
+        <p>
+        prix: {{produit.prix | currency : '€'}}
+        poids: {{produit.poids}}
+        </p>
+        <div class="row">
+            <div ng-repeat="image in produit.images track by $index"
+                class="col-md-4 col-xs-4 thumb">
+                <a class="thumbnail" href="#" style="width:224px;height:224px">
+                <img class="img-responsive"
+                        ng-src="http://localhost:8080/springMVCProduitForm/images/data/{{image.id}}"
+                        alt="{{image.name}}">
+         </a>
+    </div>
+        </div>
+</table>
