@@ -15,14 +15,16 @@
 <bean id="vente"
 	  class="com.courtalon.firstSpringBatchForm.beans.Vente"
 	  scope="prototype" />
+<bean id="customProcessor" class="com.courtalon.firstSpringBatchForm.beans.CustomItemProcessor" />
 
 <batch:job id="myFirstJob">
 	<batch:step id="step1">
 		<batch:tasklet>
 			<batch:chunk
 				reader="csvFileItemReader"
-			 	processor="com.courtalon.firstSpringBatchForm.beans.CustomItemProcessor"
-			 	writer="xmlItemWriter"/>
+			 	processor="customProcessor"
+			 	writer="xmlItemWriter"
+			 	commit-interval="10"/>
 		</batch:tasklet>
 	</batch:step>
 </batch:job>
@@ -34,16 +36,16 @@
 	  <property name="lineMapper">
 	  		<bean class="org.springframework.batch.item.file.mapping.DefaultLineMapper">
 	  			<property name="lineTokenizer">
-				  <bean class="org.springframework.batch.item.transform.DelimitedLineTokenizer">
+				  <bean class="org.springframework.batch.item.file.transform.DelimitedLineTokenizer">
 				  	<property name="names" value="id,ventes,quantite,nom,date"/>
 				  </bean>
 	  			</property>
+	  			<property name="fieldSetMapper">
+	  				<bean class="com.courtalon.firstSpringBatchForm.beans.VenteFieldSetMapper"/>
+	  			</property>
 	  		</bean>
 	  </property>
-	  <property name="fieldSetMapper">
-	  		<bean class="com.courtalon.firstSpringBatchForm.beans.VenteFieldSetMapper"/>
-	  </property>
-</bean>
+	 </bean>
 
 <!-- bean chargé d'ecrire en xml les ventes en sortie du traitement bacth -->
 <bean id="xmlItemWriter"

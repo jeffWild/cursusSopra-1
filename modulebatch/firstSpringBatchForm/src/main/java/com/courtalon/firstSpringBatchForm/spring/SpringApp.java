@@ -31,6 +31,7 @@ public class SpringApp {
 		// et la tache a executer
 		Job job = ctx.getBean("myFirstJob", Job.class);
 		
+		
 		try {
 			JobExecution execution = jobLauncher.run(job, new JobParameters());
 			System.out.println("Resultat: " + execution.getStatus());
