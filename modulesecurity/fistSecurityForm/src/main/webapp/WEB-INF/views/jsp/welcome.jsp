@@ -17,5 +17,15 @@
 <form:form action="${logoutUrl}" method="post">
 	<input type="submit" value="se deloguer" />
 </form:form>
+
+<hr />
+
+<c:url value='/public/register'  var="registerUrl" />
+<form:form action="${registerUrl}" method="post">
+	nom: <input name="name" type="text" /><br />
+	mot de passe: <input name="password" type="text" /><br />
+	<input type="submit" value="creer utilisateur" />
+</form:form>
+
 </body>
 </html>
