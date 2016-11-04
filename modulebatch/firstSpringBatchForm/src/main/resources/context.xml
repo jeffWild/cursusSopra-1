@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+            http://www.springframework.org/schema/beans/spring-beans-3.2.xsd"
+			default-autowire="byName">
+
+<!-- le bean se chargeant de persister (ici dans mysql) les job de batch,
+ permettant ainsi de les monitorer, ou de les reprendre en cas d'echec -->
+<bean id="jobRepository"
+ class="org.springframework.batch.core.repository.support.JobRepositoryFactoryBean" >
+	<property name="dataSource" ref="dataSource"/>
+	<property name="transactionManager" ref="transactionManager"/>
+	<property name="databaseType" value="mysql" /> 
+</bean>
+
+<!-- bean chargé de l'execution des travaux spring-batch (job) -->
+<bean id="jobLauncher"
+	  class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
+	  <property name="jobRepository" ref="jobRepository" />
+</bean>
+</beans>
