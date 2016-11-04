@@ -19,7 +19,10 @@
 <batch:job id="myFirstJob">
 	<batch:step id="step1">
 		<batch:tasklet>
-			<batch:chunk reader="" processor="" writer=""/>
+			<batch:chunk
+				reader="csvFileItemReader"
+			 	processor="com.courtalon.firstSpringBatchForm.beans.CustomItemProcessor"
+			 	writer="xmlItemWriter"/>
 		</batch:tasklet>
 	</batch:step>
 </batch:job>
@@ -31,9 +34,9 @@
 	  <property name="lineMapper">
 	  		<bean class="org.springframework.batch.item.file.mapping.DefaultLineMapper">
 	  			<property name="lineTokenizer">
-	  <bean class="org.springframework.batch.item.transform.DelimitedLineTokenizer">
-	  			<property name="names" value="id,ventes,quantite,nom,date"/>
-	  </bean>
+				  <bean class="org.springframework.batch.item.transform.DelimitedLineTokenizer">
+				  	<property name="names" value="id,ventes,quantite,nom,date"/>
+				  </bean>
 	  			</property>
 	  		</bean>
 	  </property>
@@ -42,4 +45,19 @@
 	  </property>
 </bean>
 
+<!-- bean chargé d'ecrire en xml les ventes en sortie du traitement bacth -->
+<bean id="xmlItemWriter"
+	  class="org.springframework.batch.item.xml.StaxEventItemWriter">
+	  <property name="resource" value="file:report.xml"/>
+	  <property name="rootTagName" value="sellReports"/>
+	  <property name="marshaller">
+	  	<bean class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+	  		<property name="classesToBeBound">
+	  			<list>
+	  				<value>com.courtalon.firstSpringBatchForm.beans.Vente</value>
+	  			</list>
+	  		</property>
+	  	</bean>
+	  </property>
+</bean>
 </beans>
