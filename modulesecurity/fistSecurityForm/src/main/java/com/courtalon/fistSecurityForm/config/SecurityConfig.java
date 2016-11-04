@@ -50,6 +50,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 								.hasRole("USER")
 								.antMatchers("/public/**")
 								.permitAll().and()
+			.logout().logoutUrl("/logout")
+					.logoutSuccessUrl("/public/")
+					.and() // j_spring_security_logout
 			.formLogin().and() // spring proposera le login via un formulaire web
 			.httpBasic(); // pas de cryptage des connexions (pas de https)
  

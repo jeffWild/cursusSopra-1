@@ -1,5 +1,6 @@
 package com.courtalon.fistSecurityForm.web;
 
+import java.security.Principal;
 import java.util.Date;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,24 +16,27 @@ import org.springframework.web.servlet.ModelAndView;
 public class IndexController {
 
 	@RequestMapping(value="/admin/", method=RequestMethod.GET)
-	public ModelAndView adminArea() {
+	public ModelAndView adminArea(Principal utilisateur) {
 		ModelAndView mv = new ModelAndView("welcome");
-		mv.addObject("message", "bienvenue venerable admin");
+		mv.addObject("message", "bienvenue venerable admin : " + utilisateur.getName());
 		
 		return mv;
 	}
 
 	@RequestMapping(value="/user/", method=RequestMethod.GET)
-	public ModelAndView userArea() {
+	public ModelAndView userArea(Principal utilisateur) {
 		ModelAndView mv = new ModelAndView("welcome");
-		mv.addObject("message", "bienvenue cher utilisateur");
+		mv.addObject("message", "bienvenue cher utilisateur : " + utilisateur.getName());
 		return mv;
 	}
 	
 	@RequestMapping(value="/public/", method=RequestMethod.GET)
-	public ModelAndView publicArea() {
+	public ModelAndView publicArea(Principal utilisateur) {
 		ModelAndView mv = new ModelAndView("welcome");
-		mv.addObject("message", "ouuiiii, c'est pour quoi?");
+		if (utilisateur != null)
+			mv.addObject("message", "ouuiiii, c'est pour quoi? : " + utilisateur.getName());
+		else
+			mv.addObject("message", "ouuiiii, c'est pour quoi?");
 		return mv;
 	}
 
